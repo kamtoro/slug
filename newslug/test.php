@@ -28,35 +28,44 @@ include_once 'includes/datalist.inc.php';
 
     <div class="panel-body">
       <!-- <form role="form" action="/includes/dataRecordings.inc.php" method="post" id="recordingsForm" > -->
-      <form role="form" id="recordingsForm" >
-        <div class="form-group">
-          <div class="col-xs-2">
+      <form role="form form-inline" id="recordingsForm" >
+
+        <div class="form-group col-xs-2">
             <select class="form-control" id="formatCB" name="formatCB" >
               <option>HD</option>
               <option>SD</option>
             </select>
-          </div>
+        </div>
 
-          <div class="col-xs-2">
-              <label for="sourceCB" class="col-md-2 sr-only control-label">Source</label>
-              <input class="form-control ui-autocomplete-input" id="sourceCB" name="sourceCB" type="text" placeholder="Source...">
-          </div>
-          <div class="col-xs-2">
-            <label for="locationCB" class="col-md-2 sr-only control-label">Location</label>
+        <div class="form-group col-xs-2">
+          <label for="sourceCB" class="sr-only">Source</label>
+          <input class="form-control ui-autocomplete-input" id="sourceCB" name="sourceCB" type="text" placeholder="Source..."/>
+        </div>
+
+        <div class="form-group has-feedback col-xs-2">
+          <div class="">
+            <label for="locationCB" class="sr-only">Location</label>
             <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location...">
           </div>
-          
-          <div class="col-xs-2">
+        </div>
+
+        <div class="form-group has-feedback col-xs-2">          
+          <div class="">
             <label for="titleCB" class="sr-only">Title</label>
             <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title...">
           </div>
-          
-          <div class="col-xs-2">
+        </div>
+
+        <div class="form-group has-feedback col-xs-2">
+          <div class="">
             <label for="subtitleCB" class="sr-only">Subtitle</label>
             <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle...">
           </div>
-          <div class="col-xs-2">
-            <label for="personCB" class="sr-only control-label">For</label>
+        </div>
+
+        <div class="form-group has-feedback col-xs-2">          
+          <div class="">
+            <label for="personCB" class="sr-only">For</label>
             <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For...">
           </div>
         </div>

@@ -19,10 +19,22 @@
 
 <style type="text/css">
 /* Custom the feedback icon styles */
-.form-horizontal .has-feedback .form-control-feedback {
-    top: 0;
-    right: 5px;
+/*#recordingsForm .form-horizontal .has-feedback .form-control-feedback {
+    top: 100;
+    right: 105px;
 }
+
+#recordingsForm .has-error .form-control {
+    border-color: #555599;
+    top: 100;
+    right: 100px;
+}
+#recordingsForm .has-feedback .form-control {
+    padding-right: 100.5px;
+    top: 100;
+    right: 100px;
+}*/
+
 </style>
 
 

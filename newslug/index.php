@@ -17,18 +17,18 @@ include_once 'includes/datalist.inc.php';
 // $stmt_source = $source->getSerializedListForCombobox($table_source, "source");
 
 // // <!-- $num = $stmt->rowCount(); -->
-// echo "Source Count: " . $stmt_source; 
 ?>
 
 <!-- <div class="container text-left" style="padding-top: 20px; margin-bottom: 10px;">  -->
 <div class="container">
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <div class="panel-title">Add/Edit Recordings</div>
+      <div class="panel-title">TEST</div>
     </div>
 
     <div class="panel-body">
-      <form role="form" action="/includes/dataRecordings.inc.php" method="post" id="recordingsForm" >
+      <!-- <form role="form" action="/includes/dataRecordings.inc.php" method="post" id="recordingsForm" > -->
+      <form role="form" id="recordingsForm" >
         <div class="form-group">
           <div class="col-xs-2">
             <select class="form-control" id="formatCB" name="formatCB" >
@@ -38,13 +38,11 @@ include_once 'includes/datalist.inc.php';
           </div>
 
           <div class="col-xs-2">
-              <label for="sourceCB" class="sr-only">Source</label>
+              <label for="sourceCB" class="col-md-2 sr-only control-label">Source</label>
               <input class="form-control ui-autocomplete-input" id="sourceCB" name="sourceCB" type="text" placeholder="Source...">
-              <input id="idCB" name="idCB" type="text" style="display: none;">
-              <input id="urnCB" name="urnCB" type="text" style="display: none;">
           </div>
           <div class="col-xs-2">
-            <label for="locationCB" class="sr-only">Location</label>
+            <label for="locationCB" class="col-md-2 sr-only control-label">Location</label>
             <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location...">
           </div>
           
@@ -58,19 +56,38 @@ include_once 'includes/datalist.inc.php';
             <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle...">
           </div>
           <div class="col-xs-2">
-            <label for="personCB" class="sr-only">For</label>
+            <label for="personCB" class="sr-only control-label">For</label>
             <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For...">
           </div>
         </div>
         <br>
-        <br>
-        <hr style="margin-top:5px">
+        
+        <!-- HIDDEN URN AND ID FIELDS -->
+        <input id="idCB" name="idCB" type="text" style="display: none;">
+        <input id="urnCB" name="urnCB" type="text" style="display: none;">
+        <!-- #messages is where the messages are placed inside -->
         <div class="form-group">
-          <input type="reset" value="Clear" id = "resetBtn" style="display: none;">
-          <button type="submit" class="btn btn-primary btn-md " id="saveBtm"><!-- Use col-xs-offset-8 to put buttoms on the right -->
-            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Submit 
+            <div class="col-md-9 col-md-offset-2">
+                <div id="messages"></div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="form-group" id = "formButtons">
+          <input type="reset" value="  Clear" id = "resetBtn" style="display: none;">
+          <input id="copytext" type="text" value="to copy text">
+
+          <button type="button" class="btn btn-primary btn-md " id="saveBtn" data-clipboard-action="copy" data-clipboard-target="#copytext"> <!-- Use col-xs-offset-8 to put buttoms on the right -->
+            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Save
           </button>
-          <button type="button" class="btn btn-md btn-default" value = "Clear" id="clearBtm">
+          <!-- CHANGED SUN 28 th AT 21:30 -->
+<!--           <button type="submit" class="btn btn-primary btn-md " id="saveBtm">Use col-xs-offset-8 to put buttoms on the right
+            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Submit 
+          </button> -->
+<!--           <button type="button" class="btn btn-primary btn-md " id="saveBtm"> Use col-xs-offset-8 to put buttoms on the right
+            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Save
+          </button> -->
+          <button type="button" class="btn btn-md btn-default" value = "Clear" id="clearBtn">
             <span class="glyphicon glyphicon-refresh" aria-hidden="true"> </span> Clear
           </button>
         </div>
