@@ -28,7 +28,7 @@ include_once 'includes/datalist.inc.php';
 
     <div class="panel-body">
       <!-- <form role="form" action="/includes/dataRecordings.inc.php" method="post" id="recordingsForm" > -->
-      <form role="form form-inline" id="recordingsForm" >
+      <form role="form-inline" id="recordingsForm" >
 
         <div class="form-group col-xs-2">
             <select class="form-control" id="formatCB" name="formatCB" >
@@ -39,7 +39,7 @@ include_once 'includes/datalist.inc.php';
 
         <div class="form-group col-xs-2">
           <label for="sourceCB" class="sr-only">Source</label>
-          <input class="form-control ui-autocomplete-input" id="sourceCB" name="sourceCB" type="text" placeholder="Source..."/>
+          <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..."/>
         </div>
 
         <div class="form-group has-feedback col-xs-2">
