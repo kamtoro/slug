@@ -38,57 +38,60 @@ include_once 'includes/datalist.inc.php';
         </div>
 
         <div class="form-group col-xs-2">
-          <label for="sourceCB" class="sr-only">Source</label>
+          <label for="sourceCB" class="sr-only control-label">Source</label>
           <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..."/>
         </div>
 
-        <div class="form-group has-feedback col-xs-2">
+        <div class="form-group col-xs-2">
           <div class="">
-            <label for="locationCB" class="sr-only">Location</label>
+            <label for="locationCB" class="sr-only control-label">Location</label>
             <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location...">
           </div>
         </div>
 
-        <div class="form-group has-feedback col-xs-2">          
+        <div class="form-group col-xs-2">          
           <div class="">
-            <label for="titleCB" class="sr-only">Title</label>
+            <label for="titleCB" class="sr-only control-label">Title</label>
             <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title...">
           </div>
         </div>
 
         <div class="form-group has-feedback col-xs-2">
           <div class="">
-            <label for="subtitleCB" class="sr-only">Subtitle</label>
+            <label for="subtitleCB" class="sr-only control-label">Subtitle</label>
             <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle...">
           </div>
         </div>
 
         <div class="form-group has-feedback col-xs-2">          
           <div class="">
-            <label for="personCB" class="sr-only">For</label>
+            <label for="personCB" class="sr-only control-label">For</label>
             <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For...">
           </div>
         </div>
         <br>
         
         <!-- HIDDEN URN AND ID FIELDS -->
-        <input id="idCB" name="idCB" type="text" style="display: none;">
-        <input id="urnCB" name="urnCB" type="text" style="display: none;">
+        <input id="idCB" name="idCB" type="text" class="sr-only" >
+        <input id="urnCB" name="urnCB" type="text" class="sr-only" >
         <!-- #messages is where the messages are placed inside -->
-        <div class="form-group">
+       <!--  <div class="form-group">
             <div class="col-md-9 col-md-offset-2">
                 <div id="messages"></div>
             </div>
-        </div>
+        </div> -->
         <br>
         <br>
-        <div class="form-group" id = "formButtons">
+        <div class="form-group text-right" id = "formButtons">
           <input type="reset" value="  Clear" id = "resetBtn" style="display: none;">
-          <input id="copytext" type="text" value="to copy text">
-
+          <input id="copytext" class="sr-only" type="text" value="to copy text">
           <button type="button" class="btn btn-primary btn-md " id="saveBtn" data-clipboard-action="copy" data-clipboard-target="#copytext"> <!-- Use col-xs-offset-8 to put buttoms on the right -->
             <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Save
           </button>
+          <button type="button" class="btn btn-md btn-default" value = "Clear" id="clearBtn">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"> </span> Clear
+          </button>
+
           <!-- CHANGED SUN 28 th AT 21:30 -->
 <!--           <button type="submit" class="btn btn-primary btn-md " id="saveBtm">Use col-xs-offset-8 to put buttoms on the right
             <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Submit 
@@ -96,9 +99,6 @@ include_once 'includes/datalist.inc.php';
 <!--           <button type="button" class="btn btn-primary btn-md " id="saveBtm"> Use col-xs-offset-8 to put buttoms on the right
             <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Save
           </button> -->
-          <button type="button" class="btn btn-md btn-default" value = "Clear" id="clearBtn">
-            <span class="glyphicon glyphicon-refresh" aria-hidden="true"> </span> Clear
-          </button>
         </div>
       </form>
     </div>
