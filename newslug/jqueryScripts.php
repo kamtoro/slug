@@ -13,15 +13,19 @@
 
 
 <!-- Tether for Bootstrap --> 
-<script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+<!-- <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script> -->
 
 <!-- Bootstrap libraries -->
 <script src="/js/bootstrap.min.js"></script>
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">   
 
 <!-- Bootstrap Validator -->
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
+<!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/> -->
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+
+<!-- Include bootgrid plugin (below), -->
+<script src="js/jquery.bootgrid-1.3.1/jquery.bootgrid.min.js"></script>
+<link href="js/jquery.bootgrid-1.3.1/jquery.bootgrid.min.css" rel="stylesheet">
 
 <style type="text/css">
 /* Custom the feedback icon styles */
@@ -99,26 +103,24 @@
       
       $("#saveBtn").on("click", function() {
 
-        if ($("#sourceCB").val() == ''|| $("#locationCB").val() == ''|| $("#personCB").val() == '') {
-          // $(this).parent().effect('shake', {times: 3}, 50).find('.verdiv').addClass('error');
-
-            $('#recordingsForm').bootstrapValidator('validate');
-            // alert();
-        }else{
-            $.ajax({
-                url: "/includes/dataRecordings.inc.php",
-                type: 'POST',
-                datatype: "html",
-                data: $("#recordingsForm").serialize(),
-                success: function(result) {
-                    $("#urnCB").val(result);
-                    var returnCopy = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val());
-                    $("#copytext").val(returnCopy);
-                    $("#resetBtn").trigger("click");
-                    $("#recordingsForm").data('bootstrapValidator').resetForm();
-                }
-            });
-        }
+          if ($("#sourceCB").val() == ''|| $("#locationCB").val() == ''|| $("#personCB").val() == '') {
+              $('#recordingsForm').bootstrapValidator('validate');
+              // alert();
+          }else{
+              $.ajax({
+                  url: "/includes/dataRecordings.inc.php",
+                  type: 'POST',
+                  datatype: "html",
+                  data: $("#recordingsForm").serialize(),
+                  success: function(result) {
+                      $("#urnCB").val(result);
+                      var returnCopy = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val());
+                      $("#copytext").val(returnCopy);
+                      $("#resetBtn").trigger("click");
+                      $("#recordingsForm").data('bootstrapValidator').resetForm();
+                  }
+              });
+          }
       });
       $( "#formButtons" ).mouseenter(function() {
           if (!$("#urnCB").val()){
@@ -206,22 +208,46 @@
       });
       
       $('#clearBtn').on('click', function(e) {
-          // var fields = $('#recordingsForm').data('formValidation').getOptions().fields, $parent, $icon;
-          
-          //alert($('#recordingsForm').bootstrapValidator());
-          
-          // for (var field in fields) {
-          //     $parent = $('[name="' + field + '"]').parents('.form-group');
-          //     $icon   = $parent.find('.form-control-feedback[data-fv-icon-for="' + field + '"]');
-          //     $icon.tooltip('destroy');
-          // }
-          
-          // Then reset the form
-          //$('#recordingsForm').data('formValidation').resetForm(true);
-
           $("#recordingsForm").data('bootstrapValidator').resetForm();
           $("#resetBtn").trigger( "click" );
       });
+      //load gird on page\e load...
+      var grid = $("#grid-data").bootgrid({
+          caseSensitive:false,
+          // ajax: true,
+          post: function(){
+              console.log("Post function");
+              return {
+                  id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+              };
+          },
+          // url: "includes/jsonDataGridRecordings.php",
+          formatters: {
+              "commands": function(column, row){
+                  return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " + 
+                      "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
+                  console.log("RATA TATA");
+              }
+          }
+      }).on("loaded.rs.jquery.bootgrid", function(){
+          /* Executes after data is loaded and rendered */
+          grid.find(".command-edit").on("click", function(e){
+              alert("You pressed edit on row: " + $(this).data("row-id"));
+          }).end().find(".command-delete").on("click", function(e){
+              alert("You pressed delete on row: " + $(this).data("row-id"));
+          });
+      });
+
+      function getServerData(){
+          console.log("getServerData");
+          $("#grid-data").bootgrid({ caseSensitive:false});
+      }
+      
+      function clearGrid(){
+          console.log("clearGrid");
+          $("#grid-data").bootgrid().clear();
+      }
+
   });
 </script>
 
