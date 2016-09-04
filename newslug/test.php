@@ -23,7 +23,7 @@ include_once 'includes/datalist.inc.php';
 <div class="container">
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <div class="panel-title">TEST</div>
+      <div class="panel-title">New Recording</div>
     </div>
 
     <div class="panel-body">
@@ -91,14 +91,6 @@ include_once 'includes/datalist.inc.php';
           <button type="button" class="btn btn-md btn-default" value = "Clear" id="clearBtn">
             <span class="glyphicon glyphicon-refresh" aria-hidden="true"> </span> Clear
           </button>
-
-          <!-- CHANGED SUN 28 th AT 21:30 -->
-<!--           <button type="submit" class="btn btn-primary btn-md " id="saveBtm">Use col-xs-offset-8 to put buttoms on the right
-            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Submit 
-          </button> -->
-<!--           <button type="button" class="btn btn-primary btn-md " id="saveBtm"> Use col-xs-offset-8 to put buttoms on the right
-            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Save
-          </button> -->
         </div>
       </form>
     </div>
@@ -106,6 +98,34 @@ include_once 'includes/datalist.inc.php';
   </div>
 </div>
 
+<div class="container">
+  <div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Recordings</div>
+    <div class="panel-body">
+      
+        <!--define the table using the proper table tags, leaving the tbody tag empty -->
+        <table id="grid-data" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="includes/jsonDataGridRecordings.php">
+          <thead>
+            <tr>
+              <th data-column-id="id" data-type="numeric" data-identifier="true">id</th>
+              <th data-column-id="format" data-sortable="false">Format</th>
+              <th data-column-id="source">Source</th>
+              <th data-column-id="location" data-order="desc">Location</th>
+              <th data-column-id="title">Title</th>
+              <th data-column-id="subtitle">Subtitle</th>
+              <th data-column-id="person">Person</th>
+              <th data-column-id="urn" data-sortable="false">URN</th>
+              <th data-column-id="commands" data-formatter="commands" data-sortable="false"></th>
+            </tr>
+          </thead>  
+        </table>
+      <!-- <button onClick="getServerData()">Refresh Data</button> 
+      <button onClick="clearGrid()">Clear table</button>  -->
+    </div>
+
+  </div>
+</div>
 <?php include_once 'jqueryScripts.php'; ?>
 <?php include_once 'footer.php'; ?>
 
