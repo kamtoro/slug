@@ -23,39 +23,48 @@ include_once 'includes/datalist.inc.php';
 <div class="container">
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <div class="panel-title">TEST</div>
+      <div class="panel-title">New Recording</div>
     </div>
 
     <div class="panel-body">
       <!-- <form role="form" action="/includes/dataRecordings.inc.php" method="post" id="recordingsForm" > -->
-      <form role="form" id="recordingsForm" >
-        <div class="form-group">
-          <div class="col-xs-2">
+      <form role="form-inline" id="recordingsForm" >
+
+        <div class="form-group col-xs-2">
             <select class="form-control" id="formatCB" name="formatCB" >
               <option>HD</option>
               <option>SD</option>
             </select>
-          </div>
+        </div>
 
-          <div class="col-xs-2">
-              <label for="sourceCB" class="col-md-2 sr-only control-label">Source</label>
-              <input class="form-control ui-autocomplete-input" id="sourceCB" name="sourceCB" type="text" placeholder="Source...">
-          </div>
-          <div class="col-xs-2">
-            <label for="locationCB" class="col-md-2 sr-only control-label">Location</label>
+        <div class="form-group col-xs-2">
+          <label for="sourceCB" class="sr-only control-label">Source</label>
+          <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..."/>
+        </div>
+
+        <div class="form-group col-xs-2">
+          <div class="">
+            <label for="locationCB" class="sr-only control-label">Location</label>
             <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location...">
           </div>
-          
-          <div class="col-xs-2">
-            <label for="titleCB" class="sr-only">Title</label>
+        </div>
+
+        <div class="form-group col-xs-2">          
+          <div class="">
+            <label for="titleCB" class="sr-only control-label">Title</label>
             <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title...">
           </div>
-          
-          <div class="col-xs-2">
-            <label for="subtitleCB" class="sr-only">Subtitle</label>
+        </div>
+
+        <div class="form-group has-feedback col-xs-2">
+          <div class="">
+            <label for="subtitleCB" class="sr-only control-label">Subtitle</label>
             <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle...">
           </div>
-          <div class="col-xs-2">
+        </div>
+
+        <div class="form-group has-feedback col-xs-2">          
+          <div class="">
             <label for="personCB" class="sr-only control-label">For</label>
             <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For...">
           </div>
@@ -63,30 +72,22 @@ include_once 'includes/datalist.inc.php';
         <br>
         
         <!-- HIDDEN URN AND ID FIELDS -->
-        <input id="idCB" name="idCB" type="text" style="display: none;">
-        <input id="urnCB" name="urnCB" type="text" style="display: none;">
+        <input id="idCB" name="idCB" type="text" class="sr-only" >
+        <input id="urnCB" name="urnCB" type="text" class="sr-only" >
         <!-- #messages is where the messages are placed inside -->
-        <div class="form-group">
+       <!--  <div class="form-group">
             <div class="col-md-9 col-md-offset-2">
                 <div id="messages"></div>
             </div>
-        </div>
+        </div> -->
         <br>
         <br>
-        <div class="form-group" id = "formButtons">
+        <div class="form-group text-right" id = "formButtons">
           <input type="reset" value="  Clear" id = "resetBtn" style="display: none;">
-          <input id="copytext" type="text" value="to copy text">
-
+          <input id="copytext" class="sr-only" type="text" value="to copy text">
           <button type="button" class="btn btn-primary btn-md " id="saveBtn" data-clipboard-action="copy" data-clipboard-target="#copytext"> <!-- Use col-xs-offset-8 to put buttoms on the right -->
             <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Save
           </button>
-          <!-- CHANGED SUN 28 th AT 21:30 -->
-<!--           <button type="submit" class="btn btn-primary btn-md " id="saveBtm">Use col-xs-offset-8 to put buttoms on the right
-            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Submit 
-          </button> -->
-<!--           <button type="button" class="btn btn-primary btn-md " id="saveBtm"> Use col-xs-offset-8 to put buttoms on the right
-            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Save
-          </button> -->
           <button type="button" class="btn btn-md btn-default" value = "Clear" id="clearBtn">
             <span class="glyphicon glyphicon-refresh" aria-hidden="true"> </span> Clear
           </button>
@@ -97,6 +98,34 @@ include_once 'includes/datalist.inc.php';
   </div>
 </div>
 
+<div class="container">
+  <div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Recordings</div>
+    <div class="panel-body">
+      
+        <!--define the table using the proper table tags, leaving the tbody tag empty -->
+        <table id="grid-data" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="includes/jsonDataGridRecordings.php">
+          <thead>
+            <tr>
+              <th data-column-id="id" data-type="numeric" data-identifier="true">id</th>
+              <th data-column-id="format" data-sortable="false">Format</th>
+              <th data-column-id="source">Source</th>
+              <th data-column-id="location" data-order="desc">Location</th>
+              <th data-column-id="title">Title</th>
+              <th data-column-id="subtitle">Subtitle</th>
+              <th data-column-id="person">Person</th>
+              <th data-column-id="urn" data-sortable="false">URN</th>
+              <th data-column-id="commands" data-formatter="commands" data-sortable="false"></th>
+            </tr>
+          </thead>  
+        </table>
+      <!-- <button onClick="getServerData()">Refresh Data</button> 
+      <button onClick="clearGrid()">Clear table</button>  -->
+    </div>
+
+  </div>
+</div>
 <?php include_once 'jqueryScripts.php'; ?>
 <?php include_once 'footer.php'; ?>
 
