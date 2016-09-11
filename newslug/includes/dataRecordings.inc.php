@@ -1,26 +1,68 @@
 <?php
 include_once 'config.php';
 //get form field values
+
+
 if (!empty($_POST)) {
 
-  $format   = $_POST['formatCB'];
-  $source   = $_POST['sourceCB'];
-  $location = $_POST['locationCB'];
-  $title    = $_POST['titleCB'];
-  $subtitle = $_POST['subtitleCB'];
-  $person   = $_POST['personCB'];
-  $urn      = $_POST['urnCB'];
-  $id       = $_POST['idCB'];
-  $tdate    = date("Y-m-d", time());
-  $status   = "unused";
-  if($id==""){
-    $newURN = insertNewRecording($format, $source, $location, $title, $subtitle, $person, $urn);
-    echo $newURN;
-    //return $urn;
-  }else {
-    $urn = insertNewRecording($id, $format, $source, $location, $title, $subtitle, $person, $urn);
-    //return $urn;
+  $action = "";
+
+  if(isset($_POST['action'])){
+      $action = $_POST['action'];
   }
+  if(isset($_POST['idRecording'])){
+      $idRecording = $_POST['idRecording'];
+  }
+
+  if($action =="getRecordingByID"){
+    echo json_encode(getRecordingByID(20017));
+    //echo json_encode(getRecordingByID($idRecording));
+  }else{
+    $format   = $_POST['formatCB'];
+    $source   = $_POST['sourceCB'];
+    $location = $_POST['locationCB'];
+    $title    = $_POST['titleCB'];
+    $subtitle = $_POST['subtitleCB'];
+    $person   = $_POST['personCB'];
+    $urn      = $_POST['urnCB'];
+    $id       = $_POST['idCB'];
+    $savingMode= $_POST['savingMode'];
+    $tdate    = date("Y-m-d", time());
+    $status   = "unused";
+    if($savingMode=="insert"){
+      if($id==""){
+        $newURN = insertNewRecording($format, $source, $location, $title, $subtitle, $person, $urn);
+        echo $newURN;
+        //return $urn;
+      }else {
+        $urn = insertNewRecording($id, $format, $source, $location, $title, $subtitle, $person, $urn);
+        //return $urn;
+      }
+    }elseif ($savingMode == "edit") {
+        updateRecording($id, $format, $source, $location, $title, $subtitle, $person, $urn);    
+    }
+  }
+}
+
+function getRecordingByID($id){  
+  try {
+    $sql = "SELECT format, source, location, title, subtitle, person, urn FROM recordings WHERE id = :id";    
+    
+    $database = new Config();
+    $db = $database->getConnection();
+    $stmt = $db->prepare($sql);
+    $stmt -> bindParam(':id', $id);
+    $stmt -> execute();
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    //$rows = $sth->fetchAll(PDO::FETCH_ASSOC|PDO::FETCH_GROUP);
+    //echo "ACA ENTRO asdf asdf";
+    return $row;
+  } catch (PDOException $e) {
+      echo 'Connection failed: ' . $e->getMessage();
+      return 'Connection failed: '. $e->getMessage();
+  }
+  $db = $database->closeConnection();
 }
 
 function updateRecording($id, $format, $source, $location, $title, $subtitle, $person, $urn){  
@@ -52,9 +94,7 @@ function updateRecording($id, $format, $source, $location, $title, $subtitle, $p
   } catch (PDOException $e) {
       echo 'Connection failed: ' . $e->getMessage();
   }
-
   $db = $database->closeConnection();
-  return $urn;
 }
 
 function insertNewRecording($format, $source, $location, $title, $subtitle, $person, $urn){
@@ -65,11 +105,8 @@ function insertNewRecording($format, $source, $location, $title, $subtitle, $per
   if($urn==""){
     $urn = getURNValue();
   }
-  /*
-  echo "<script>alert('".$sql."'); </script>";
-  */
   try {
-    $sql = "INSERT INTO recordings(format, source, location, title, subtitle, person, urn, time, status,timeEntered)".
+    $sql = "INSERT INTO recordings(format, source, location, title, subtitle, person, urn, time, status, timeEntered)".
              " VALUES (:format, :source, :location, :title, :subtitle, :person, :urn, :time, :status, :tdate)";
     $database = new Config();
     $db = $database->getConnection();
@@ -85,90 +122,17 @@ function insertNewRecording($format, $source, $location, $title, $subtitle, $per
     $stmt -> bindParam(':status',   $status);
     $stmt -> bindParam(':tdate',    $tdate);
     $stmt -> execute();
-
-
-    // echo "<br>for ".$format;
-    // echo "<br>sou ".$source;
-    // echo "<br>loc ".$location;
-    // echo "<br>tit ".$title;
-    // echo "<br>sub ".$subtitle;
-    // echo "<br>per ".$person;
-    // echo "<br>urn ".$urn;
-    // echo "<br>sta ".$status;
-    // echo "<br>tda ".$tdate;
-
-    // $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // echo "<br><br><br>aca entro 1 sql ".$sql." ".$urn;
-    // $stmt = $db->prepare($sql);
-
-    // $vals = array(
-    //     ':format'=>$format,
-    //     ':source'=>$source,
-    //     ':location'=>$location,
-    //     ':title'=>cleanString($title),
-    //     ':subtitle'=>cleanString($subtitle),
-    //     ':person'=>$person, 
-    //     ':urn'=>$urn,
-    //     ':status'=>$status,
-    //     ':tdate'=>$tdate));
-    // echo ($vals);
-
-    // echo "<br><br><br>aca entro 1 sql ".$sql." ".$urn;
-
-    // $stmt->execute(array(
-    //     ':format'=>$format,
-    //     ':source'=>$source,
-    //     ':location'=>$location,
-    //     ':title'=>cleanString($title),
-    //     ':subtitle'=>cleanString($subtitle),
-    //     ':person'=>$person, 
-    //     ':urn'=>$urn,
-    //     ':status'=>$status,
-    //     ':tdate'=>$tdate));
-
-    // echo "<br><br><br>aca entro 1 sql ".$sql." ".$urn;
   } catch (PDOException $e) {
       echo 'Connection failed: ' . $e->getMessage();
   }
-
-  //$db = $database->closeConnection();
   return $urn;
-
-  //$array_json_row["id"]       = $db ;
-  // $array_json_row["value"]    = $query;
-  // $array_json_row["label"]    = $query;
-  // array_push($array_json, $array_json_row);
-
-  //echo json_encode($array_json);
-
-    // if($stmt->execute()){
-    //     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-    //     }
-    // }else{
-    // } 
-    
-    //return json data
-    /* jQuery wants JSON data */
-    // echo json_encode($array_json);
-    // echo $array_json;
-    // flush();
-
-    //return json data
-    /* jQuery wants JSON data */
-    //flush();
 }
 
 function cleanString($string){
-  // allow only letters
-  //$res = preg_replace("/[^a-zA-Z0-9\s](tilde|quot)?#+;/i", '-', $string);
-  
   $unwantedCharacters = array("/", ",", "*", ";");
   $res = str_replace($unwantedCharacters, "-", $string);
-  // trim what's left to 8 chars
   return $res;
 }
-
 function getURNValue() {
   $cdate = mktime(0, 0, 0, 1, 1, 2000, 0);
   $today = time();
@@ -187,13 +151,9 @@ function getURNValue() {
   $urn = $A . $B . $C;
   $num = 0;
 
-    
-
   try {
-
     $tdate = date("Y-m-d", time());
     $sql = "SELECT id FROM recordings WHERE timeEntered >= '$tdate'";
-    // $sql = "INSERT INTO recordings(format, source,location,title,subtitle,person,urn,time,status,timeEntered) VALUES ('HD', 'camilo', 'toro','Lick it up','Kiss','person','urn','2016-08-31 23:59:59','status','2016-08-31')";
     $database = new Config();
     $db = $database->getConnection();
     $stmt = $db->prepare($sql);

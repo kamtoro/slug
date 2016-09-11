@@ -56,6 +56,83 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
+
+    
+      //load gird on page\e load...
+      var grid = $("#grid-data").bootgrid({
+          ajax: true,
+          post: function ()
+          {
+              /* To accumulate custom parameter with the request object */
+              return {
+                  id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+              };
+          },
+          url: "/includes/jsonDataGridRecordings.php",
+          formatters: {
+              // "link": function(column, row)
+              // {
+              //     return "<a href=\"#\">" + column.id + ": " + row.id + "</a>";
+              // }
+              "link": function(column, row){
+                  return "<button type=\"button\" class=\"btn btn-primary btn-sm command-edit\" data-row-id=\""  + row.id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></button> " + 
+                      "<button type=\"button\" class=\"btn btn-success btn-sm command-copy\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-download-alt\"></span></button> "+ 
+                      "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
+              }
+          }
+      }).on("loaded.rs.jquery.bootgrid", function(){
+          /* Executes after data is loaded and rendered */
+          grid.find(".command-edit").on("click", function(e){
+              //alert("You pressed edit on row: " + $(this).data("row-id"));
+              // debugger;
+
+
+
+              // jQuery.ajax({
+              //     type: "POST",
+              //     url: '/includes/dataRecordings.inc.php',
+              //     dataType: 'html',
+              //     data: {functionname: 'getURNValue'},
+              //     success: function (result) {
+              //         //$("#urnCB").val(result);
+              //         alert(result);
+              //         //$("#copytext").val(textToClipboard);
+              //     }
+              // });
+
+
+
+
+              $.ajax({
+                  url: "/includes/dataRecordings.inc.php",
+                  type: 'POST',
+                  dataType: "json",
+                  data:{ action: "getRecordingByID", idRecording : $(this).data("row-id")}, 
+                  success: function(result) {
+                      $("#savingMode").val("edit");
+                      console.log(recordingRow.format);
+
+                      //var recordingRow = $.parseJSON(result);
+                      alert("You pressed edit on row: ".recordingRow.format);
+                      // $("#idCB").val($(this).data("row-id"));
+                      // $("#formatCB").val(recordingRow.format);
+                      // $("#sourceCB").val(recordingRow.source);
+                      // $("#locationCB").val(recordingRow.location);
+                      // $("#titleCB").val(recordingRow.title);
+                      // $("#subtitleCB").val(recordingRow.subtitle);
+                      // $("#personCB").val(recordingRow.person);
+                      // $("#urnCB").val(recordingRow.urn);
+                      // $("#savingMode").val("edit");
+                      // var returnCopy = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val());
+                      // $("#copytext").val(returnCopy);
+                  }
+              });
+              // debugger;
+
+          }).end().find(".command-delete").on("click", function(e){
+              alert("You pressed delete on row: " + $(this).data("row-id"));
+          });
+      });
       $("#sourceCB" ).autocomplete({
           minLength: 1,
           source: "/includes/jsonObjetDataList.php?table=sourceList&field=source",
@@ -210,32 +287,6 @@
       $('#clearBtn').on('click', function(e) {
           $("#recordingsForm").data('bootstrapValidator').resetForm();
           $("#resetBtn").trigger( "click" );
-      });
-      //load gird on page\e load...
-      var grid = $("#grid-data").bootgrid({
-          caseSensitive:false,
-          // ajax: true,
-          post: function(){
-              console.log("Post function");
-              return {
-                  id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
-              };
-          },
-          // url: "includes/jsonDataGridRecordings.php",
-          formatters: {
-              "commands": function(column, row){
-                  return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " + 
-                      "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
-                  console.log("RATA TATA");
-              }
-          }
-      }).on("loaded.rs.jquery.bootgrid", function(){
-          /* Executes after data is loaded and rendered */
-          grid.find(".command-edit").on("click", function(e){
-              alert("You pressed edit on row: " + $(this).data("row-id"));
-          }).end().find(".command-delete").on("click", function(e){
-              alert("You pressed delete on row: " + $(this).data("row-id"));
-          });
       });
 
       function getServerData(){

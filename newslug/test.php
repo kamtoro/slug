@@ -74,6 +74,8 @@ include_once 'includes/datalist.inc.php';
         <!-- HIDDEN URN AND ID FIELDS -->
         <input id="idCB" name="idCB" type="text" class="sr-only" >
         <input id="urnCB" name="urnCB" type="text" class="sr-only" >
+        <input id="savingMode" name="savingMode" type="text" value="insert" >
+
         <!-- #messages is where the messages are placed inside -->
        <!--  <div class="form-group">
             <div class="col-md-9 col-md-offset-2">
@@ -83,7 +85,7 @@ include_once 'includes/datalist.inc.php';
         <br>
         <br>
         <div class="form-group text-right" id = "formButtons">
-          <input type="reset" value="  Clear" id = "resetBtn" style="display: none;">
+          <input type="reset" value="  Clear" id = "resetBtn" class="sr-only">
           <input id="copytext" class="sr-only" type="text" value="to copy text">
           <button type="button" class="btn btn-primary btn-md " id="saveBtn" data-clipboard-action="copy" data-clipboard-target="#copytext"> <!-- Use col-xs-offset-8 to put buttoms on the right -->
             <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Save
@@ -105,10 +107,10 @@ include_once 'includes/datalist.inc.php';
     <div class="panel-body">
       
         <!--define the table using the proper table tags, leaving the tbody tag empty -->
-        <table id="grid-data" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="includes/jsonDataGridRecordings.php">
+        <table id="grid-data" class="table table-condensed table-hover table-striped">
           <thead>
             <tr>
-              <th data-column-id="id" data-type="numeric" data-identifier="true">id</th>
+              <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="true">id</th>
               <th data-column-id="format" data-sortable="false">Format</th>
               <th data-column-id="source">Source</th>
               <th data-column-id="location" data-order="desc">Location</th>
@@ -116,7 +118,7 @@ include_once 'includes/datalist.inc.php';
               <th data-column-id="subtitle">Subtitle</th>
               <th data-column-id="person">Person</th>
               <th data-column-id="urn" data-sortable="false">URN</th>
-              <th data-column-id="commands" data-formatter="commands" data-sortable="false"></th>
+              <th data-column-id="link" data-formatter="link" data-sortable="false">Link</th>
             </tr>
           </thead>  
         </table>
