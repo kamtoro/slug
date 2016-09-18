@@ -8,13 +8,20 @@ $database = new Config();
 $conn = $database->getConnection();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // echo 'SQL PDO ERROR: 1';
-$where =" status='unused' ";
+$where = " status='unused' ";
+
+if (isset($_GET["webpage"])){
+    if ($_GET["webpage"] == "history"){
+        $where = " 1 = 1 ";
+    }
+}
+
+
 $order_by="id";
 $rows=25;
 $current=1;
 $limit_l=($current * $rows) - ($rows);
-$limit_h=$limit_lower + $rows  ;
-
+$limit_h=$limit_lower + $rows;
 
 //Handles Sort querystring sent from Bootgrid
 if (isset($_REQUEST['sort']) && is_array($_REQUEST['sort']) )
@@ -25,11 +32,10 @@ if (isset($_REQUEST['sort']) && is_array($_REQUEST['sort']) )
     }
 
 //Handles search  querystring sent from Bootgrid 
-if (isset($_REQUEST['searchPhrase']) )
-  {
+if (isset($_REQUEST['searchPhrase']) ){
     $search=trim($_REQUEST['searchPhrase']);
-    $where.= " AND (source LIKE '".$search."%' OR location LIKE '".$search."%' OR title LIKE '".$search."%' OR  subtitle LIKE '".$search."%' OR person LIKE '".$search."%' ) "; 
-    }
+    $where.= " AND (source LIKE '%".$search."%' OR location LIKE '%".$search."%' OR title LIKE '%".$search."%' OR  subtitle LIKE '%".$search."%' OR person LIKE '%".$search."%' ) "; 
+}
 
 //Handles determines where in the paging count this result set falls in
 if (isset($_REQUEST['rowCount']) )  
@@ -43,13 +49,15 @@ if (isset($_REQUEST['rowCount']) )
     $limit_h=$rows ;
    }
 
-if ($rows==-1)
-$limit="";  //no limit
-else   
-$limit=" LIMIT $limit_l,$limit_h  ";
+if ($rows==-1){
+    $limit="";  //no limit
+}
+else   {
+    $limit=" LIMIT $limit_l,$limit_h  ";
+}
    
 //NOTE: No security here please beef this up using a prepared statement - as is this is prone to SQL injection.
-$sql="SELECT id, replace(source,'\"','' ) as source, location, format, title, subtitle, person, urn FROM recordings WHERE $where ORDER BY $order_by $limit";
+$sql="SELECT id, replace(source,'\"','' ) as source, location, format, title, subtitle, person, urn, time FROM recordings WHERE $where ORDER BY $order_by $limit";
 
 $stmt=$conn->prepare($sql);
 $stmt->execute();

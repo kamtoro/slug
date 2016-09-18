@@ -1,22 +1,24 @@
 <?php
 include_once 'config.php';
 //get form field values
-
-
 if (!empty($_POST)) {
-
   $action = "";
-
   if(isset($_POST['action'])){
       $action = $_POST['action'];
   }
   if(isset($_POST['idRecording'])){
       $idRecording = $_POST['idRecording'];
   }
-
   if($action =="getRecordingByID"){
-    echo json_encode(getRecordingByID(20017));
-    //echo json_encode(getRecordingByID($idRecording));
+    // echo json_encode(getRecordingByID(20017));
+    echo json_encode(getRecordingByID($idRecording));
+  }elseif($action =="deleteRecording"){
+    echo deleteRecording($idRecording);
+  }elseif($action =="deleteAllRecordings"){
+    echo deleteAllRecordings();
+  }elseif($action =="getURNValue"){
+    // echo "cagada";
+    echo getURNValue();
   }else{
     $format   = $_POST['formatCB'];
     $source   = $_POST['sourceCB'];
@@ -30,54 +32,94 @@ if (!empty($_POST)) {
     $tdate    = date("Y-m-d", time());
     $status   = "unused";
     if($savingMode=="insert"){
-      if($id==""){
         $newURN = insertNewRecording($format, $source, $location, $title, $subtitle, $person, $urn);
         echo $newURN;
-        //return $urn;
-      }else {
-        $urn = insertNewRecording($id, $format, $source, $location, $title, $subtitle, $person, $urn);
-        //return $urn;
-      }
-    }elseif ($savingMode == "edit") {
-        updateRecording($id, $format, $source, $location, $title, $subtitle, $person, $urn);    
+    }elseif($savingMode == "edit") {
+        $return= "update";
+        $return = updateRecording($id, $format, $source, $location, $title, $subtitle, $person, $urn);
+        echo $return;
+    }elseif($savingMode == "delete") {
+        $return= "delete";
+        $return = deleteRecording($idRecording);
+        echo $return;
     }
   }
+}
+
+function deleteRecording($id) {
+  $tdate = date("Y-m-d H:i:s", time());
+  try {
+    // $sql = "SELECT format, source, location, title, subtitle, person, urn FROM recordings WHERE id = :id";
+
+    $sql = "UPDATE recordings SET status = \"deleted\", time = :tdate WHERE id = :id";
+    // $sql = "UPDATE recordings SET status = \"deleted\" WHERE id = :id";
+
+    $database = new Config();
+    $db = $database->getConnection();
+    $stmt = $db->prepare($sql);
+
+    $stmt -> bindParam(':id',       $id);
+    $stmt -> bindParam(':tdate',    $tdate);
+    $stmt -> execute();
+
+    $db = $database->closeConnection();
+    return "Recording deleted => ".$id;
+  } catch (PDOException $e) {
+      // echo 'Connection failed: ' . $e->getMessage();
+      return 'Connection failed: '. $e->getMessage();
+  }
+}
+
+function deleteAllRecordings() {
+    $tdate = date("Y-m-d H:i:s", time());
+    try {
+      // $sql = "UPDATE recordings SET status = \"deleted\" WHERE status = \"unused\"";
+
+      $sql = "UPDATE recordings SET status = \"deleted\", time = :tdate WHERE status = \"unused\"";
+
+      $database = new Config();
+      $db = $database->getConnection();
+      $stmt = $db->prepare($sql);
+
+      $stmt -> bindParam(':tdate',    $tdate);
+      $stmt -> execute();
+
+      $db = $database->closeConnection();
+      return "Delete all Recordings ";
+    } catch (PDOException $e) {
+        // echo 'Connection failed: ' . $e->getMessage();
+        return 'Connection failed: '. $e->getMessage();
+    }
 }
 
 function getRecordingByID($id){  
   try {
     $sql = "SELECT format, source, location, title, subtitle, person, urn FROM recordings WHERE id = :id";    
-    
     $database = new Config();
     $db = $database->getConnection();
     $stmt = $db->prepare($sql);
     $stmt -> bindParam(':id', $id);
     $stmt -> execute();
-    $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    //$rows = $sth->fetchAll(PDO::FETCH_ASSOC|PDO::FETCH_GROUP);
-    //echo "ACA ENTRO asdf asdf";
+    $db = $database->closeConnection();
     return $row;
   } catch (PDOException $e) {
-      echo 'Connection failed: ' . $e->getMessage();
+      // echo 'Connection failed: ' . $e->getMessage();
       return 'Connection failed: '. $e->getMessage();
   }
-  $db = $database->closeConnection();
 }
 
-function updateRecording($id, $format, $source, $location, $title, $subtitle, $person, $urn){  
-  $tdate = date("Y-m-d", time());
-  $timedate = date("Y-m-d 23:59:59", time());
-  $status   = "unused";
+function updateRecording($id, $format, $source, $location, $title, $subtitle, $person, $urn){
+  $tdate = date("Y-m-d H:i:s", time());
+  // $timedate = date("Y-m-d 23:59:59", time());
+  // $status   = "unused";
 
   //GET URN
   if($urn==""){
     $urn = getURNValue();
   }
   try {
-    $sql = "UPDATE recordings SET format = :format, source = :source, location = :location, title = :title, subtitle = :subtitle, person = :person, timeEntered = :tdate WHERE id = :id";
-    echo "<script>alert('".$sql."'); </script>";
-
+    $sql = "UPDATE recordings SET format = :format, source = :source, location = :location, title = :title, subtitle = :subtitle, person = :person, time = :tdate WHERE id = :id";
     $database = new Config();
     $db = $database->getConnection();
     $stmt = $db->prepare($sql);
@@ -91,15 +133,21 @@ function updateRecording($id, $format, $source, $location, $title, $subtitle, $p
     $stmt -> bindParam(':id',       $id);
     $stmt -> bindParam(':tdate',    $tdate);
     $stmt -> execute();
+
+    // $sql = "format ".$format." - ".$source." - ".$location." - ".$title." - ".$subtitle." - ".$person." - ".$id;
+    return "updated";
+  
   } catch (PDOException $e) {
-      echo 'Connection failed: ' . $e->getMessage();
+      //echo 'Connection failed: ' . $e->getMessage();
+      return 'Connection failed: ' . $e->getMessage();
+
   }
   $db = $database->closeConnection();
 }
 
 function insertNewRecording($format, $source, $location, $title, $subtitle, $person, $urn){
-  $tdate = date("Y-m-d", time());
-  $timedate = date("Y-m-d 23:59:59", time());
+  $tdate = date("Y-m-d H:i:s", time());
+  $timedate = date("Y-m-d H:i:s", time());
   $status   = "unused";
   //GET URN
   if($urn==""){
@@ -133,159 +181,45 @@ function cleanString($string){
   $res = str_replace($unwantedCharacters, "-", $string);
   return $res;
 }
+
 function getURNValue() {
-  $cdate = mktime(0, 0, 0, 1, 1, 2000, 0);
-  $today = time();
-  $difference =  $today - $cdate;
-  if ($difference < 0) { $difference = 0; }
-  $days = floor($difference/60/60/24);
-  $letter = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
-  $urn = "";
-  $number = intval($days / 676);
-  $remainder = $days - ($number*676);
-  $A =  $letter[$number];
-  $number = intval($remainder / 26);
-  $remainder = $remainder - ($number*26);
-  $B = $letter[$number];
-  $C = $letter[$remainder];
-  $urn = $A . $B . $C;
-  $num = 0;
+    $cdate = mktime(0, 0, 0, 1, 1, 2000, 0);
+    $today = time();
+    $difference =  $today - $cdate;
+    if ($difference < 0) { $difference = 0; }
+    $days = floor($difference/60/60/24);
+    $letter = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+    $urn = "";
+    $number = intval($days / 676);
+    $remainder = $days - ($number*676);
+    $A =  $letter[$number];
+    $number = intval($remainder / 26);
+    $remainder = $remainder - ($number*26);
+    $B = $letter[$number];
+    $C = $letter[$remainder];
+    $urn = $A . $B . $C;
+    $num = 0;
 
-  try {
-    $tdate = date("Y-m-d", time());
-    $sql = "SELECT id FROM recordings WHERE timeEntered >= '$tdate'";
-    $database = new Config();
-    $db = $database->getConnection();
-    $stmt = $db->prepare($sql);
-    $stmt->execute(); 
-    $num = $stmt->rowCount();
-    $db = $database->closeConnection();
-  } catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
-  }
-  if (strlen($num)=="1") {
-    $num = "00" . $num;
-  }
-  else if(strlen($num)=="2") {
-    $num = "0" . $num;
-  }
-
-  $urn = $urn . $num;
-  return $urn;
+    try {
+      $tdate = date("Y-m-d", time());
+      $sql = "SELECT id FROM recordings WHERE timeEntered >= '$tdate'";
+      // $sql = "INSERT INTO recordings(format, source,location,title,subtitle,person,urn,time,status,timeEntered) VALUES ('HD', 'camilo', 'toro','Lick it up','Kiss','person','urn','2016-08-31 23:59:59','status','2016-08-31')";
+      $database = new Config();
+      $db = $database->getConnection();
+      $stmt = $db->prepare($sql);
+      $stmt->execute(); 
+      $num = $stmt->rowCount();
+      $db = $database->closeConnection();
+    } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+    }
+    if (strlen($num)=="1") {
+        $num = "00" . $num;
+    }
+    else if(strlen($num)=="2") {
+        $num = "0" . $num;
+    }
+    $urn = $urn . $num;
+    return $urn;
 }
-// class DataRecordings{
-  
-//  // database connection and table name
-//  private $conn;
-//  private $table_name = "recordings";
-  
-
-  
-//  // read products
-//  function readAll($page, $from_record_num, $records_per_page){
- 
-//   $query = "SELECT 
-//      *
-//     FROM 
-//      " . $this->table_name . "
-//     ORDER BY 
-//      timeEntered DESC 
-//     LIMIT 
-//      {$from_record_num}, {$records_per_page}";
-   
-//   $stmt = $this->conn->prepare( $query );
-//   $stmt->execute();
-   
-//   return $stmt;
-//  }
-  
-//  // used for paging products
-//  public function countAll(){
-   
-//   $query = "SELECT urn FROM " . $this->table_name . "";
-   
-//   $stmt = $this->conn->prepare( $query );
-//   $stmt->execute();
-   
-//   $num = $stmt->rowCount();
-   
-//   return $num;
-//  }
-  
-//  // used when filling up the update product form
-//  function readOne(){
-   
-//   $query = "SELECT 
-//      *
-//     FROM 
-//      " . $this->table_name . "
-//     WHERE 
-//      urn = ? 
-//     LIMIT 
-//      0,1";
- 
-//   $stmt = $this->conn->prepare( $query );
-//   $stmt->bindParam(1, $this->id);
-//   $stmt->execute();
- 
-//   $row = $stmt->fetch(PDO::FETCH_ASSOC);
-   
-//   // $this->nm = $row['nm_pdo']; EXAMPLE
-//   $this->source =   $row['source'];
-//   $this->location = $row['location'];
-//   $this->title =    $row['title'];
-//   $this->subtitle = $row['subtitle'];
-//   $this->person =   $row['person'];
-//   $this->urn =      $row['urn'];
-//   $this->time =     $row['time'];
-//   $this->status =   $row['status'];
-//   $this->timeEntered = $row['timeEntered'];
-//   $this->format =   $row['format'];
-
-//  }
-  
-//  // update the product
-//  function update(){
- 
-//   $query = "UPDATE 
-//      " . $this->table_name . "
-//     WHERE
-//      urn = :urn";
- 
-//   $stmt = $this->conn->prepare($query);
-
-//   $stmt->bindParam(':source',   $this->source);
-//   $stmt->bindParam(':location', $this->location);
-//   $stmt->bindParam(':title',    $this->title);
-//   $stmt->bindParam(':subtitle', $this->subtitle);
-//   $stmt->bindParam(':person',   $this->person);
-//   $stmt->bindParam(':urn',      $this->urn);
-//   $stmt->bindParam(':time',     $this->time);
-//   $stmt->bindParam(':status',   $this->status);
-//   $stmt->bindParam(':timeEntered',$this->timeEntered);
-//   $stmt->bindParam(':format',   $this->format); 
-
-//   // execute the query
-//   if($stmt->execute()){
-//    return true;
-//   }else{
-//    return false;
-//   }
-//  }
-  
-//  // delete the product
-//  function delete(){
-  
-//   $query = "DELETE FROM " . $this->table_name . " WHERE urn = ?";
-   
-//   $stmt = $this->conn->prepare($query);
-//   $stmt->bindParam(1, $this->urn);
- 
-//   if($result = $stmt->execute()){
-//    return true;
-//   }else{
-//    return false;
-//   }
-//  }
-// }
 ?> 

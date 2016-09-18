@@ -16,8 +16,7 @@
 <!-- <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script> -->
 
 <!-- Bootstrap libraries -->
-<script src="/js/bootstrap.min.js"></script>
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">   
+<script src="/js/bootstrap.min.js"></script>   
 
 <!-- Bootstrap Validator -->
 <!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/> -->
@@ -57,89 +56,111 @@
 <script type="text/javascript">
   $(document).ready(function(){
 
-    
+      var webpage = "<?php echo _WEBPAGE_ ?>";
+      if (webpage == "history"){
+          commandsDatagrid = "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\"row\"><div class=\"col-sm-12 actionBar\"> <p class=\"{{css.search}}\"></p></div></div></div>";
+          var rowCountDatagrid = 50;
+      }else{
+          commandsDatagrid = "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\"row\"><div class=\"col-sm-12 actionBar\"> <p class=\"{{css.search}}\"></p> <button type=\"button\" class=\"btn btn-default\" id=\"deleteAllBtn\"><span class=\"glyphicon glyphicon-trash\"></span> Delete all</button> </div></div></div>";
+           
+          var rowCountDatagrid = [10, 25, 50, -1];
+      }
+
+
       //load gird on page\e load...
       var grid = $("#grid-data").bootgrid({
           ajax: true,
-          post: function ()
-          {
+          search:  false,
+          rowCount: rowCountDatagrid,
+          post: function (){
               /* To accumulate custom parameter with the request object */
               return {
                   id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
               };
           },
-          url: "/includes/jsonDataGridRecordings.php",
+          templates: {
+              header: commandsDatagrid
+              // <p class=\"{{css.actions}}\"> To add Refresh, Pagination, and column selector buttons 
+          },
+          url: "/includes/jsonDataGridRecordings.php?webpage="+webpage,
+          
           formatters: {
-              // "link": function(column, row)
-              // {
-              //     return "<a href=\"#\">" + column.id + ": " + row.id + "</a>";
-              // }
               "link": function(column, row){
-                  return "<button type=\"button\" class=\"btn btn-primary btn-sm command-edit\" data-row-id=\""  + row.id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></button> " + 
-                      "<button type=\"button\" class=\"btn btn-success btn-sm command-copy\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-download-alt\"></span></button> "+ 
-                      "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
+                  var copyTextString = updateTextForClipboard(row.format, row.source, row.location, row.title, row.subtitle, row.person, row.urn);
+                  // All buttons commented, just temporally.
+                  return "<button type=\"button\" class=\"btn btn-primary btn-sm command-edit\" data-row-id=\""  + row.id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></button> " + "<button type=\"button\" class=\"btn btn-success btn-sm command-copy\" data-clipboard-text=\""+copyTextString+"\"><span class=\"glyphicon glyphicon-download-alt\"></span></button> "+ "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
               }
           }
+
       }).on("loaded.rs.jquery.bootgrid", function(){
           /* Executes after data is loaded and rendered */
           grid.find(".command-edit").on("click", function(e){
-              //alert("You pressed edit on row: " + $(this).data("row-id"));
-              // debugger;
+          // alert("You pressed edit on row: " + $(this).data("row-id"));
 
-
-
-              // jQuery.ajax({
-              //     type: "POST",
-              //     url: '/includes/dataRecordings.inc.php',
-              //     dataType: 'html',
-              //     data: {functionname: 'getURNValue'},
-              //     success: function (result) {
-              //         //$("#urnCB").val(result);
-              //         alert(result);
-              //         //$("#copytext").val(textToClipboard);
-              //     }
-              // });
-
-
-
-
+              var idRecording = $(this).data("row-id");
               $.ajax({
                   url: "/includes/dataRecordings.inc.php",
                   type: 'POST',
                   dataType: "json",
-                  data:{ action: "getRecordingByID", idRecording : $(this).data("row-id")}, 
+                  data:{ action: "getRecordingByID", idRecording : idRecording}, 
                   success: function(result) {
                       $("#savingMode").val("edit");
-                      console.log(recordingRow.format);
-
-                      //var recordingRow = $.parseJSON(result);
-                      alert("You pressed edit on row: ".recordingRow.format);
-                      // $("#idCB").val($(this).data("row-id"));
-                      // $("#formatCB").val(recordingRow.format);
-                      // $("#sourceCB").val(recordingRow.source);
-                      // $("#locationCB").val(recordingRow.location);
-                      // $("#titleCB").val(recordingRow.title);
-                      // $("#subtitleCB").val(recordingRow.subtitle);
-                      // $("#personCB").val(recordingRow.person);
-                      // $("#urnCB").val(recordingRow.urn);
-                      // $("#savingMode").val("edit");
-                      // var returnCopy = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val());
-                      // $("#copytext").val(returnCopy);
+                      $("#idCB").val(idRecording);
+                      $("#formatCB").val(result.format);
+                      $("#sourceCB").val(result.source);
+                      $("#locationCB").val(result.location);
+                      $("#titleCB").val(result.title);
+                      $("#subtitleCB").val(result.subtitle);
+                      $("#personCB").val(result.person);
+                      $("#urnCB").val(result.urn);
+                      $("#savingMode").val("edit");
+                      var returnCopy = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val());
+                      $("#copytext").val(returnCopy);
                   }
               });
               // debugger;
 
           }).end().find(".command-delete").on("click", function(e){
-              alert("You pressed delete on row: " + $(this).data("row-id"));
+              var idRecording = $(this).data("row-id"); 
+              $.ajax({
+                  url: "/includes/dataRecordings.inc.php",
+                  type: 'POST',
+                  dataType: "html",
+                  data:{ action: "deleteRecording", idRecording : idRecording}, 
+                  success: function(result) {
+                      $("#grid-data").bootgrid('reload');
+                      // console.log(result);
+                  }
+              });
+          })
+          .end().find(".command-copy").on("click", function(e){
+              e.preventDefault();
           });
+
+          var btn = document.querySelectorAll('button.command-copy');
+          var clipboard = new Clipboard(btn);
+          clipboard.on('success', function (e) {
+              console.info('Copied to Clipboard: ', e.action);
+          });
+          if (webpage == "index"){
+              $("#deleteAllBtn").on("click", function() {
+                  $.ajax({
+                          url: "/includes/dataRecordings.inc.php",
+                          type: 'POST',
+                          dataType: "html",
+                          data:{ action: "deleteAllRecordings"}, 
+                          success: function(result) {
+                              $("#grid-data").bootgrid('reload');
+                              // console.log(result);
+                          }
+                  });
+              });
+          }
       });
+
       $("#sourceCB" ).autocomplete({
           minLength: 1,
           source: "/includes/jsonObjetDataList.php?table=sourceList&field=source",
-          // focus: function( event, ui ) {
-          //   $( "#sourceCB" ).val( ui.item.label );
-          //   return false;
-          // },
           select: function( event, ui ) {
               $("#sourceCB").val( ui.item.label );
               return false;
@@ -182,7 +203,6 @@
 
           if ($("#sourceCB").val() == ''|| $("#locationCB").val() == ''|| $("#personCB").val() == '') {
               $('#recordingsForm').bootstrapValidator('validate');
-              // alert();
           }else{
               $.ajax({
                   url: "/includes/dataRecordings.inc.php",
@@ -190,42 +210,47 @@
                   datatype: "html",
                   data: $("#recordingsForm").serialize(),
                   success: function(result) {
-                      $("#urnCB").val(result);
+                      if (result == "updated"){
+                          console.log(result + " record.");
+                      }else{
+                          $("#urnCB").val(result);
+                      }
                       var returnCopy = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val());
                       $("#copytext").val(returnCopy);
+                      $("#grid-data").bootgrid('reload');
                       $("#resetBtn").trigger("click");
                       $("#recordingsForm").data('bootstrapValidator').resetForm();
                   }
               });
           }
       });
-      $( "#formButtons" ).mouseenter(function() {
-          if (!$("#urnCB").val()){
-              jQuery.ajax({
-                  type: "POST",
-                  url: '/includes/dataRecordings.inc.php',
-                  dataType: 'html',
-                  data: {functionname: 'getURNValue'},
-                  success: function (result) {
-                      $("#urnCB").val(result);
-                      var textToClipboard = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val());
-                      $("#copytext").val(textToClipboard);
-                  }
-              });
-          }else{
-              var textToClipboard = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val());
-              $("#copytext").val(textToClipboard);
+
+      $('.form-control').keyup(function(){
+          $("#copytext").val(updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val()));
+      });
+
+      $('#recordingsForm input').blur(function () {
+          var textToClipboard = "";
+          if ($("#urnCB").val() == ''){
+              getURNVal();
           }
+          textToClipboard = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val());
+          $("#copytext").val(textToClipboard);
+          //$(this).parents('p').addClass('warning');
+      });
+      $( "#formButtons").mouseenter(function() {
+          var textToClipboard = "";
+          if ($("#urnCB").val() == ''){
+              getURNVal();
+          }
+          textToClipboard = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val());
+          $("#copytext").val(textToClipboard);
       });
       
       var clipboard = new Clipboard('.btn');
       clipboard.on('success', function(e) {
-          // console.info('Action:', e.action);
-          // console.info('Text:', e.text);
-          // console.info('Trigger:', e.trigger);
           e.clearSelection();
       });
-      
       clipboard.on('error', function(e) {
           console.error('Error Action:', e.action);
           console.error('Error Trigger:', e.trigger);
@@ -283,22 +308,31 @@
               container: 'body'
           });
       });
-      
       $('#clearBtn').on('click', function(e) {
           $("#recordingsForm").data('bootstrapValidator').resetForm();
           $("#resetBtn").trigger( "click" );
       });
 
       function getServerData(){
-          console.log("getServerData");
+          //console.log("getServerData");
           $("#grid-data").bootgrid({ caseSensitive:false});
       }
-      
       function clearGrid(){
-          console.log("clearGrid");
+          //console.log("clearGrid");
           $("#grid-data").bootgrid().clear();
       }
-
+      function getURNVal(){
+          $.ajax({
+              url: "includes/dataRecordings.inc.php",
+              type: 'POST',
+              dataType: "html",
+              data:{ action: "getURNValue"}, 
+              success: function(result) {
+                  $("#urnCB").val(result);
+                  console.log("Entro al getURNVal");
+              }
+          });
+      }
   });
 </script>
 

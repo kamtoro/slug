@@ -27,19 +27,13 @@ include_once 'includes/datalist.inc.php';
     </div>
 
     <div class="panel-body">
-      <!-- <form role="form" action="/includes/dataRecordings.inc.php" method="post" id="recordingsForm" > -->
       <form role="form-inline" id="recordingsForm" >
 
-        <div class="form-group col-xs-2">
-            <select class="form-control" id="formatCB" name="formatCB" >
+        <div class="form-group sr-only">
+            <select class="form-control sr-only" id="formatCB" name="formatCB" >
               <option>HD</option>
               <option>SD</option>
             </select>
-        </div>
-
-        <div class="form-group col-xs-2">
-          <label for="sourceCB" class="sr-only control-label">Source</label>
-          <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..."/>
         </div>
 
         <div class="form-group col-xs-2">
@@ -49,14 +43,19 @@ include_once 'includes/datalist.inc.php';
           </div>
         </div>
 
-        <div class="form-group col-xs-2">          
+        <div class="form-group col-xs-2">
+          <label for="sourceCB" class="sr-only control-label">Source</label>
+          <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..."/>
+        </div>
+
+        <div class="form-group col-xs-3">          
           <div class="">
             <label for="titleCB" class="sr-only control-label">Title</label>
             <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title...">
           </div>
         </div>
 
-        <div class="form-group has-feedback col-xs-2">
+        <div class="form-group has-feedback col-xs-3">
           <div class="">
             <label for="subtitleCB" class="sr-only control-label">Subtitle</label>
             <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle...">
@@ -73,8 +72,8 @@ include_once 'includes/datalist.inc.php';
         
         <!-- HIDDEN URN AND ID FIELDS -->
         <input id="idCB" name="idCB" type="text" class="sr-only" >
-        <input id="urnCB" name="urnCB" type="text" class="sr-only" >
-        <input id="savingMode" name="savingMode" type="text" value="insert" >
+        <input id="urnCB" name="urnCB" type="text " class="sr-only" >
+        <input id="savingMode" name="savingMode" type="text" value="insert" class="sr-only" >
 
         <!-- #messages is where the messages are placed inside -->
        <!--  <div class="form-group">
@@ -86,8 +85,8 @@ include_once 'includes/datalist.inc.php';
         <br>
         <div class="form-group text-right" id = "formButtons">
           <input type="reset" value="  Clear" id = "resetBtn" class="sr-only">
-          <input id="copytext" class="sr-only" type="text" value="to copy text">
-          <button type="button" class="btn btn-primary btn-md " id="saveBtn" data-clipboard-action="copy" data-clipboard-target="#copytext"> <!-- Use col-xs-offset-8 to put buttoms on the right -->
+          <input id="copytext"  type="text" value="to copy text" class="sr-only">
+          <button type="button" class="btn btn-primary btn-md" id="saveBtn" data-clipboard-action="copy" data-clipboard-target="#copytext"> <!-- Use col-xs-offset-8 to put buttoms on the right -->
             <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"> </span> Save
           </button>
           <button type="button" class="btn btn-md btn-default" value = "Clear" id="clearBtn">
@@ -110,15 +109,16 @@ include_once 'includes/datalist.inc.php';
         <table id="grid-data" class="table table-condensed table-hover table-striped">
           <thead>
             <tr>
-              <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="true">id</th>
-              <th data-column-id="format" data-sortable="false">Format</th>
+              <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="false">id</th>
+              <th data-column-id="urn" data-sortable="false" data-align="left" data-width="70">URN</th>
+              <th data-column-id="location" data-sortable="false" data-order="desc" data-width="110px">Location</th>
+              <th data-column-id="format" data-sortable="false" data-visible="false">Format</th>
               <th data-column-id="source">Source</th>
-              <th data-column-id="location" data-order="desc">Location</th>
               <th data-column-id="title">Title</th>
               <th data-column-id="subtitle">Subtitle</th>
-              <th data-column-id="person">Person</th>
-              <th data-column-id="urn" data-sortable="false">URN</th>
-              <th data-column-id="link" data-formatter="link" data-sortable="false">Link</th>
+              <th data-column-id="person" data-width="130px">Person</th>
+              <!-- <th data-column-id="copyTextRow" data-formatter="copyTextRow" data-sortable="false">Copy</th> -->
+              <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
             </tr>
           </thead>  
         </table>
