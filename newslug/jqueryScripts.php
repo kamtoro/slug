@@ -122,11 +122,18 @@
 
           }).end().find(".command-delete").on("click", function(e){
               var idRecording = $(this).data("row-id"); 
+              if (webpage == "history"){
+                  //Used in History page where recording will be fully removed from DB
+                  var actionDelete = "hardDeleteFromDB";
+              }else{
+                  var actionDelete = "deleteRecording";
+              }
+
               $.ajax({
                   url: "/includes/dataRecordings.inc.php",
                   type: 'POST',
                   dataType: "html",
-                  data:{ action: "deleteRecording", idRecording : idRecording}, 
+                  data:{ action: actionDelete, idRecording : idRecording}, 
                   success: function(result) {
                       $("#grid-data").bootgrid('reload');
                       // console.log(result);
@@ -160,7 +167,7 @@
 
       $("#sourceCB" ).autocomplete({
           minLength: 1,
-          source: "/includes/jsonObjetDataList.php?table=sourceList&field=source",
+          source: "../includes/jsonObjetDataList.php?table=sourceList&field=source",
           select: function( event, ui ) {
               $("#sourceCB").val( ui.item.label );
               return false;
@@ -168,7 +175,7 @@
       });
       $("#locationCB" ).autocomplete({
           minLength: 1,
-          source: "/includes/jsonObjetDataList.php?table=locationList&field=location",
+          source: "../includes/jsonObjetDataList.php?table=locationList&field=location",
           select: function( event, ui ) {
               $( "#locationCB" ).val( ui.item.label );
               return false;
@@ -176,7 +183,7 @@
       });
       $("#titleCB" ).autocomplete({
           minLength: 1,
-          source: "/includes/jsonObjetDataList.php?table=titleList&field=title",
+          source: "../includes/jsonObjetDataList.php?table=titleList&field=title",
           select: function( event, ui ) {
               $( "#titleCB" ).val( ui.item.label );
               return false;
@@ -184,7 +191,7 @@
       });
       $("#subtitleCB" ).autocomplete({
           minLength: 1,
-          source: "/includes/jsonObjetDataList.php?table=titleList&field=title",
+          source: "../includes/jsonObjetDataList.php?table=titleList&field=title",
           select: function( event, ui ) {
               $( "#subtitleCB" ).val( ui.item.label );
               return false;
@@ -192,7 +199,7 @@
       });
       $("#personCB" ).autocomplete({
           minLength: 1,
-          source: "/includes/jsonObjetDataList.php?table=personList&field=lastname",
+          source: "../includes/jsonObjetDataList.php?table=personList&field=lastname",
           select: function( event, ui ) {
               $( "#personCB" ).val( ui.item.label );
               return false;

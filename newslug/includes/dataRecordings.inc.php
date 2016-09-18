@@ -12,6 +12,8 @@ if (!empty($_POST)) {
   if($action =="getRecordingByID"){
     // echo json_encode(getRecordingByID(20017));
     echo json_encode(getRecordingByID($idRecording));
+  }elseif($action =="hardDeleteFromDB"){
+    echo deleteRecordingFromDB($idRecording);
   }elseif($action =="deleteRecording"){
     echo deleteRecording($idRecording);
   }elseif($action =="deleteAllRecordings"){
@@ -43,6 +45,25 @@ if (!empty($_POST)) {
         $return = deleteRecording($idRecording);
         echo $return;
     }
+  }
+}
+
+function deleteRecordingFromDB($id) {
+  try {
+    $sql = "DELETE FROM recordings WHERE id = :id";
+
+    $database = new Config();
+    $db = $database->getConnection();
+    $stmt = $db->prepare($sql);
+
+    $stmt -> bindParam(':id',       $id);
+    $stmt -> execute();
+
+    $db = $database->closeConnection();
+    return "Recording deleted FROM DB => ".$id;
+  } catch (PDOException $e) {
+      // echo 'Connection failed: ' . $e->getMessage();
+      return 'Connection failed: '. $e->getMessage();
   }
 }
 

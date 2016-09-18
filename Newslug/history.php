@@ -90,8 +90,8 @@ include_once 'includes/datalist.inc.php';
         <div class="panel-body">
           <form role="form-inline" id="recordingsForm" >
 
-            <div class="form-group sr-only">
-                <select class="form-control sr-only" id="formatCB" name="formatCB" >
+            <div class="form-group col-xs-2">
+                <select class="form-control" id="formatCB" name="formatCB" >
                   <option>HD</option>
                   <option>SD</option>
                 </select>
@@ -109,14 +109,14 @@ include_once 'includes/datalist.inc.php';
               <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..."/>
             </div>
 
-            <div class="form-group col-xs-3">          
+            <div class="form-group col-xs-2">          
               <div class="">
                 <label for="titleCB" class="sr-only control-label">Title</label>
                 <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title...">
               </div>
             </div>
 
-            <div class="form-group has-feedback col-xs-3">
+            <div class="form-group has-feedback col-xs-2">
               <div class="">
                 <label for="subtitleCB" class="sr-only control-label">Subtitle</label>
                 <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle...">
@@ -169,7 +169,7 @@ include_once 'includes/datalist.inc.php';
     <div class="container">
       <div class="panel panel-primary">
         <!-- Default panel contents -->
-        <div class="panel-heading">Recording</div>
+        <div class="panel-heading">Historical All Recordings</div>
         <div class="panel-body">
           
             <!--define the table using the proper table tags, leaving the tbody tag empty -->
