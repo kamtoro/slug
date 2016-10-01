@@ -24,22 +24,17 @@ include_once 'includes/datalist.inc.php';
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>SLUG - Recordings</title>
     <meta charset="utf-8">
-
     <!-- Customised CSS -->
     <link rel="stylesheet" type="text/css" href="css/custom.css"> 
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
   </head>
-
 
 <!-- 
 ======================================================================
                               BODY
 ======================================================================
 -->
-
   <body>
-
-
     <!-- 
     ======================================================================
                                   NAVBAR

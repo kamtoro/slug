@@ -1,5 +1,6 @@
 <?php
 include_once 'config.php';
+
 //get form field values
 if (!empty($_POST)) {
   $action = "";
@@ -9,34 +10,17 @@ if (!empty($_POST)) {
   if(isset($_POST['idRecording'])){
       $idRecording = $_POST['idRecording'];
   }
-  if($action =="getRecordingByID"){
+
+  if($action =="getDataFormat"){
     // echo json_encode(getRecordingByID(20017));
-    echo json_encode(getRecordingByID($idRecording));
-  }elseif($action =="hardDeleteFromDB"){
-    echo deleteRecordingFromDB($idRecording);
-  }elseif($action =="deleteRecording"){
-    echo deleteRecording($idRecording);
-  }elseif($action =="deleteAllRecordings"){
-    echo deleteAllRecordings();
-  }elseif($action =="getURNValue"){
-    // echo "cagada";
-    echo getURNValue();
+    echo getDataSettings("SELECT id, format FROM format");
   }else{
-    $format   = $_POST['formatCB'];
-    $source   = $_POST['sourceCB'];
-    $location = $_POST['locationCB'];
-    $title    = $_POST['titleCB'];
-    $subtitle = $_POST['subtitleCB'];
-    $person   = $_POST['personCB'];
-    $urn      = $_POST['urnCB'];
-    $id       = $_POST['idCB'];
+    $id       = $_POST['id'];
     $savingMode= $_POST['savingMode'];
     $tdate    = date("Y-m-d", time());
     $status   = "unused";
-
-
     if($savingMode=="insertSettings"){
-        $newURN = insertSettings($format, $source, $location, $title, $subtitle, $person, $urn);
+        $newURN = getDataSettings($format, $source, $location, $title, $subtitle, $person, $urn);
         echo $newURN;
     }elseif($savingMode=="insert"){
         $newURN = insertNewRecording($format, $source, $location, $title, $subtitle, $person, $urn);
@@ -53,54 +37,20 @@ if (!empty($_POST)) {
   }
 }
 
-function insertSettings($format, $source, $location, $title, $subtitle, $person, $urn){
-    if ($format != "") {
-        $format = $format;
-        if (checkList("format", "format", $format)) {
-            $query = insertSQLSetting("INSERT INTO Format(format) VALUES('{$format}')");
-            echo "Added $format to format list.";
-        } else {
-            echo "Value $format is already in format list." . "<br>";
-        }
-    }
-    if ($location != "") {
-        $location = ucwords(strtolower($location));
-        if (checkList("locationList", "location", $location)) {
-            $query = insertSQLSetting("INSERT INTO locationList(location) VALUES ('{$location}')");
-            MySQL_SubmitQuery($sql, $link) or die('Error, Query failed');
-            echo "added $location to location list. ".$query . "<br>";
-        } else {
-            echo "Value $location is already in location list." . "<br>";
-        }
-    }
-    if ($source != "") {
-        $source = ucwords(strtolower($source));
-        if (checkList("sourceList", "source", $source)) {
-            $query = insertSQLSetting("INSERT INTO sourceList(source) VALUES('{$source}')");
-            echo "added $source to source list. " .$query. "<br>";
-        } else {
-            echo "Value $source is already in source list." . "<br>";
-        }
-    }
-    if ($title != "") {
-        $title = ucwords(strtolower($title));
-        if (checkList("titleList", "title", $title)) {
-            $query = insertSQLSetting("INSERT INTO titleList(title) VALUES('{$title}')");
-            MySQL_SubmitQuery($sql, $link) or die('Error, Query failed');
-            echo "added $title to title list. ". $query . "<br>";
-        } else {
-            echo "Value $title is already in title list." . "<br>";
-        }
-    }
-    if ($personList != "") {
-        $person = ucwords(strtolower($person));
-        if (checkList("personList", "lastname", $person)) {
-            $query = insertSQLSetting("INSERT INTO personList(lastname) VALUES('{$person}')");
-            MySQL_SubmitQuery($sql, $link) or die('Error, Query failed');
-            echo "added $person to person list. ". $query ."<br>";
-        } else {
-            echo "Value $person is already in person list." . "<br>";
-        }
+function getDataSettings($sql){
+    try {
+        $database = new Config();
+        $db = $database->getConnection();
+        $stmt=$db->prepare($sql);
+        $stmt->execute();
+        $results_array=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $json=json_encode( $results_array );
+        header('Content-Type: application/json'); //tell the broswer JSON is coming
+        return $json;  //Just plain vanillat JSON out
+  } catch (PDOException $e) {
+        return false;
+        echo $json;  //Just plain vanillat JSON out
     }
 }
 

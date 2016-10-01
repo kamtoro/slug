@@ -91,48 +91,41 @@ include_once 'includes/datalist.inc.php';
             <div class="form-group col-xs-2">
               <div class="">
                 <label for="formatCB" class="sr-only control-label">Format</label>
-                <input class="form-control" id="formatCB" name="formatCB" type="text" placeholder="Format...">
+                <input class="form-control" id="formatCB" name="formatCB" type="text" placeholder="Format..." maxlength="10">
               </div>
             </div>
 
             <div class="form-group col-xs-2">
               <div class="">
                 <label for="locationCB" class="sr-only control-label">Location</label>
-                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location...">
+                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="20">
               </div>
             </div>
 
             <div class="form-group col-xs-2">
               <label for="sourceCB" class="sr-only control-label">Source</label>
-              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..."/>
+              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="25"/>
             </div>
 
-            <div class="form-group col-xs-2">          
+            <div class="form-group col-xs-3">          
               <div class="">
                 <label for="titleCB" class="sr-only control-label">Title</label>
-                <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title...">
+                <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title/Subtitle..." maxlength="20">
               </div>
             </div>
 
-            <div class="form-group has-feedback col-xs-2">
-              <div class="">
-                <label for="subtitleCB" class="sr-only control-label">Subtitle</label>
-                <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle...">
-              </div>
-            </div>
-
-            <div class="form-group has-feedback col-xs-2">          
+            <div class="form-group has-feedback col-xs-3">          
               <div class="">
                 <label for="personCB" class="sr-only control-label">For</label>
                 <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For...">
               </div>
             </div>  
             <br>
-            
+
             <!-- HIDDEN URN AND ID FIELDS -->
             <input id="idCB" name="idCB" type="text" class="sr-only" >
             <input id="urnCB" name="urnCB" type="text " class="sr-only" >
-            <input id="savingMode" name="savingMode" type="text" value="insert" class="sr-only" >
+            <input id="savingMode" name="savingMode" type="text" value="insertSettings" class="sr-only" >
 
             <!-- #messages is where the messages are placed inside -->
             <!--  <div class="form-group">
@@ -174,29 +167,65 @@ include_once 'includes/datalist.inc.php';
                     <li><a href="#locationTab" data-toggle="tab">Location</a></li>
                     <li><a href="#sourceTab" data-toggle="tab">Source</a></li>
                     <li><a href="#titleTab" data-toggle="tab">Title</a></li>
-                    <li><a href="#subtitleTab" data-toggle="tab">Subtitle</a></li>
                     <li><a href="#personTab" data-toggle="tab">For</a></li>
                 </ul>
             </div> 
             <div class="panel-body">
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="formatTab">
-                        Format
+                        <table id="grid-data-format" class="table table-condensed table-hover table-striped">
+                          <thead>
+                            <tr>
+                              <th data-column-id="id" data-width="50px" data-type="numeric" data-identifier="true" data-visible="true">id</th>
+                              <th data-column-id="format" data-width="130px">Format</th>
+                              <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
+                            </tr>
+                          </thead>  
+                        </table>
                     </div>
                     <div class="tab-pane fade" id="locationTab">
-                        Location
+                        <table id="grid-data-location" class="table table-condensed table-hover table-striped">
+                          <thead>
+                            <tr>
+                              <th data-column-id="id" data-width="50px" data-type="numeric" data-identifier="true" data-visible="true">id</th>
+                              <th data-column-id="location" data-width="130px">Location</th>
+                              <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
+                            </tr>
+                          </thead>
+                        </table>
                     </div>
                     <div class="tab-pane fade" id="sourceTab">
-                        Source
+                        <table id="grid-data-source" class="table table-condensed table-hover table-striped">
+                          <thead>
+                            <tr>
+                              <th data-column-id="id" data-width="50px" data-type="numeric" data-identifier="true" data-visible="true">id</th>
+                              <th data-column-id="source" data-width="130px">Source</th>
+                              <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
+                            </tr>
+                          </thead>
+                        </table>
                     </div>
                     <div class="tab-pane fade" id="titleTab">
-                        Title
-                    </div>
-                    <div class="tab-pane fade" id="subtitleTab">
-                        Subtitle
+                        <table id="grid-data-title" class="table table-condensed table-hover table-striped">
+                          <thead>
+                            <tr>
+                              <th data-column-id="id" data-width="50px" data-type="numeric" data-identifier="true" data-visible="true">id</th>
+                              <th data-column-id="title" data-width="130px">Title</th>
+                              <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
+                            </tr>
+                          </thead>
+                        </table>
                     </div>
                     <div class="tab-pane fade" id="personTab">
-                        For
+                        <table id="grid-data-person" class="table table-condensed table-hover table-striped">
+                          <thead>
+                            <tr>
+                              <th data-column-id="id" data-width="50px" data-type="numeric" data-identifier="true" data-visible="true">id</th>
+                              <th data-column-id="lastname" data-width="130px">Person</th>
+                              <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
+                            </tr>
+                          </thead>
+                        </table>
                     </div>
                 </div>
             </div>
