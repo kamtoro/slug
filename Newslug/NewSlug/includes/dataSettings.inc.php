@@ -1,5 +1,6 @@
 <?php
 include_once 'config.php';
+
 //get form field values
 if (!empty($_POST)) {
   $action = "";
@@ -9,34 +10,17 @@ if (!empty($_POST)) {
   if(isset($_POST['idRecording'])){
       $idRecording = $_POST['idRecording'];
   }
-  if($action =="getRecordingByID"){
+
+  if($action =="getDataFormat"){
     // echo json_encode(getRecordingByID(20017));
-    echo json_encode(getRecordingByID($idRecording));
-  }elseif($action =="hardDeleteFromDB"){
-    echo deleteRecordingFromDB($idRecording);
-  }elseif($action =="deleteRecording"){
-    echo deleteRecording($idRecording);
-  }elseif($action =="deleteAllRecordings"){
-    echo deleteAllRecordings();
-  }elseif($action =="getURNValue"){
-    // echo "cagada";
-    echo getURNValue();
+    echo getDataSettings("SELECT id, format FROM format");
   }else{
-    $format   = $_POST['formatCB'];
-    $source   = $_POST['sourceCB'];
-    $location = $_POST['locationCB'];
-    $title    = $_POST['titleCB'];
-    $subtitle = $_POST['subtitleCB'];
-    $person   = $_POST['personCB'];
-    $urn      = $_POST['urnCB'];
-    $id       = $_POST['idCB'];
+    $id       = $_POST['id'];
     $savingMode= $_POST['savingMode'];
     $tdate    = date("Y-m-d", time());
     $status   = "unused";
-
-
     if($savingMode=="insertSettings"){
-        $newURN = insertSettings($format, $source, $location, $title, $subtitle, $person, $urn);
+        $newURN = getDataSettings($format, $source, $location, $title, $subtitle, $person, $urn);
         echo $newURN;
     }elseif($savingMode=="insert"){
         $newURN = insertNewRecording($format, $source, $location, $title, $subtitle, $person, $urn);
@@ -53,6 +37,23 @@ if (!empty($_POST)) {
   }
 }
 
+function getDataSettings($sql){
+    try {
+        $database = new Config();
+        $db = $database->getConnection();
+        $stmt=$db->prepare($sql);
+        $stmt->execute();
+        $results_array=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $json=json_encode( $results_array );
+        header('Content-Type: application/json'); //tell the broswer JSON is coming
+        return $json;  //Just plain vanillat JSON out
+  } catch (PDOException $e) {
+        return false;
+        echo $json;  //Just plain vanillat JSON out
+    }
+}
+
 function insertSQLSetting($sql){
     try {
         $database = new Config();
@@ -65,6 +66,28 @@ function insertSQLSetting($sql){
         return false;
     }
     return $urn;
+}
+
+function checkList($table, $value, $listValue) {
+    try {
+        $sql = "SELECT * FROM " . $table . " WHERE " . $value . "='" . $listValue . "'";
+        $database = new Config();
+        $db = $database->getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt -> execute();
+
+        echo "Value received ".$sql;
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); // Same here
+        if($rows){
+            $db = $database->closeConnection();
+            return false;
+        } else {
+            $db = $database->closeConnection();
+            return true;
+        }
+    }catch (PDOException $e) {
+          return false;
+    }
 }
 
 function deleteRecordingFromDB($id) {

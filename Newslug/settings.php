@@ -21,7 +21,7 @@ include_once 'includes/datalist.inc.php';
   <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>SLUG - Recordings</title>
+    <title>SLUG - Settings</title>
     <meta charset="utf-8">
 
     <!-- Customised CSS -->
@@ -87,7 +87,7 @@ include_once 'includes/datalist.inc.php';
         </div>
 
         <div class="panel-body">
-          <form role="form-inline" id="recordingsForm" >
+          <form role="form-inline" id="settingsForm" >
             <div class="form-group col-xs-2">
               <div class="">
                 <label for="formatCB" class="sr-only control-label">Format</label>
@@ -183,6 +183,7 @@ include_once 'includes/datalist.inc.php';
                           </thead>  
                         </table>
                     </div>
+
                     <div class="tab-pane fade" id="locationTab">
                         <table id="grid-data-location" class="table table-condensed table-hover table-striped">
                           <thead>
@@ -227,6 +228,7 @@ include_once 'includes/datalist.inc.php';
                           </thead>
                         </table>
                     </div>
+                    
                 </div>
             </div>
         </div>

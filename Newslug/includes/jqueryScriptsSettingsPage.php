@@ -12,7 +12,7 @@
 
 <!-- Bootstrap Validator -->
 <!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/> -->
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+<script type="text/javascript" src="../js/bootstrapValidator.min.js"></script>
 
 <!-- Include bootgrid plugin (below), -->
 <script src="../js/jquery.bootgrid-1.3.1/jquery.bootgrid.min.js"></script>
@@ -31,7 +31,7 @@
            
 
       //  *****  Format  *****  //
-      var grid = $("#grid-data-format").bootgrid({
+      var gridFormat = $("#grid-data-format").bootgrid({
           ajax: true,
           search:  false,
           rowCount: rowCountDatagrid,
@@ -48,27 +48,32 @@
           },
           formatters: {
               "link": function(column, row){
-                  return "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
+                  return "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete-format\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
               }
           }
       }).on("loaded.rs.jquery.bootgrid", function(){
           /* Executes after data is loaded and rendered */
-          grid.find(".command-delete").on("click", function(e){
-              var idFormat = $(this).data("row-id");
+          gridFormat.find(".command-delete-format").on("click", function(e){
+              var idSetting = $(this).data("row-id");
+              var actionDelete = "deleteSetting";
+              var tableToDelete = "format";
+
               $.ajax({
                   url: "/includes/dataSettings.inc.php",
                   type: 'POST',
-                  dataType: "json",
-                  data:{ action: "formatGrid", id: idFormat}, 
+                  dataType: "html",
+                  data:{ action: actionDelete, idSetting : idSetting, tableToDelete: tableToDelete}, 
                   success: function(result) {
                       $("#grid-data-format").bootgrid('reload');
+                      console.log(result);
                   }
               });
           });
       });
 
-      //  *****  Location  *****  //      
-      var grid = $("#grid-data-location").bootgrid({
+
+      // //  *****  Location  *****  //    
+      var gridLocation = $("#grid-data-location").bootgrid({
           ajax: true,
           search:  false,
           rowCount: rowCountDatagrid,
@@ -85,27 +90,33 @@
           },
           formatters: {
               "link": function(column, row){
-                  return "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
+                  return "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete-location\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
               }
           }
       }).on("loaded.rs.jquery.bootgrid", function(){
           /* Executes after data is loaded and rendered */
-          grid.find(".command-delete").on("click", function(e){
-              var idlocation = $(this).data("row-id");
+          gridLocation.find(".command-delete-location").on("click", function(e){
+              var idSetting = $(this).data("row-id");
+              var actionDelete = "deleteSetting";
+              var tableToDelete = "locationList";
+
               $.ajax({
                   url: "/includes/dataSettings.inc.php",
                   type: 'POST',
-                  dataType: "json",
-                  data:{ action: "location", id: idlocation}, 
+                  dataType: "html",
+                  data:{ action: actionDelete, idSetting : idSetting, tableToDelete: tableToDelete}, 
                   success: function(result) {
                       $("#grid-data-location").bootgrid('reload');
+                      console.log(result);
                   }
               });
           });
       });
 
-      //  *****  Source  *****  //    
-      var grid = $("#grid-data-source").bootgrid({
+
+
+      // //  *****  Source  *****  //    
+      var gridSource = $("#grid-data-source").bootgrid({
           ajax: true,
           search:  false,
           rowCount: rowCountDatagrid,
@@ -122,29 +133,31 @@
           },
           formatters: {
               "link": function(column, row){
-                  return "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
+                  return "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete-source\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
               }
           }
       }).on("loaded.rs.jquery.bootgrid", function(){
           /* Executes after data is loaded and rendered */
-          grid.find(".command-delete").on("click", function(e){
-              var idlocation = $(this).data("row-id");
+          gridSource.find(".command-delete-source").on("click", function(e){
+              var idSetting = $(this).data("row-id");
+              var actionDelete = "deleteSetting";
+              var tableToDelete = "sourceList";
+
               $.ajax({
                   url: "/includes/dataSettings.inc.php",
                   type: 'POST',
-                  dataType: "json",
-                  data:{ action: "location", id: idlocation}, 
+                  dataType: "html",
+                  data:{ action: actionDelete, idSetting : idSetting, tableToDelete: tableToDelete}, 
                   success: function(result) {
-                      $("#grid-data-location").bootgrid('reload');
+                      $("#grid-data-source").bootgrid('reload');
+                      console.log(result);
                   }
               });
           });
       });
 
-
-
-      //  *****  Title  *****  //      
-      var grid = $("#grid-data-title").bootgrid({
+      // //  *****  Title  *****  //    
+      var gridTitle = $("#grid-data-title").bootgrid({
           ajax: true,
           search:  false,
           rowCount: rowCountDatagrid,
@@ -161,28 +174,32 @@
           },
           formatters: {
               "link": function(column, row){
-                  return "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
+                  return "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete-title\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
               }
           }
       }).on("loaded.rs.jquery.bootgrid", function(){
           /* Executes after data is loaded and rendered */
-          grid.find(".command-delete").on("click", function(e){
-              var idlocation = $(this).data("row-id");
+          gridTitle.find(".command-delete-title").on("click", function(e){
+              var idSetting = $(this).data("row-id");
+              var actionDelete = "deleteSetting";
+              var tableToDelete = "titleList";
+
               $.ajax({
                   url: "/includes/dataSettings.inc.php",
                   type: 'POST',
-                  dataType: "json",
-                  data:{ action: "location", id: idlocation}, 
+                  dataType: "html",
+                  data:{ action: actionDelete, idSetting : idSetting, tableToDelete: tableToDelete}, 
                   success: function(result) {
-                      $("#grid-data-location").bootgrid('reload');
+                      $("#grid-data-title").bootgrid('reload');
+                      console.log(result);
                   }
               });
           });
       });
 
 
-      //  *****  Person  *****  //      
-      var grid = $("#grid-data-person").bootgrid({
+      // //  *****  Title  *****  //    
+      var gridPerson = $("#grid-data-person").bootgrid({
           ajax: true,
           search:  false,
           rowCount: rowCountDatagrid,
@@ -199,91 +216,62 @@
           },
           formatters: {
               "link": function(column, row){
-                  return "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
+                  return "<button type=\"button\" class=\"btn btn-danger btn-sm command-delete-person\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
               }
           }
       }).on("loaded.rs.jquery.bootgrid", function(){
           /* Executes after data is loaded and rendered */
-          grid.find(".command-delete").on("click", function(e){
-              var idlocation = $(this).data("row-id");
+          gridPerson.find(".command-delete-person").on("click", function(e){
+              var idSetting = $(this).data("row-id");
+              var actionDelete = "deleteSetting";
+              var tableToDelete = "personList";
+
               $.ajax({
                   url: "/includes/dataSettings.inc.php",
                   type: 'POST',
-                  dataType: "json",
-                  data:{ action: "location", id: idlocation}, 
+                  dataType: "html",
+                  data:{ action: actionDelete, idSetting : idSetting, tableToDelete: tableToDelete}, 
                   success: function(result) {
-                      $("#grid-data-location").bootgrid('reload');
+                      $("#grid-data-person").bootgrid('reload');
+                      console.log(result);
                   }
               });
           });
       });
+      
       $("#saveBtn").on("click", function() {
           console.log("Entro al click");
           $.ajax({
-              url: "/includes/dataRecordings.inc.php",
+              url: "/includes/dataSettings.inc.php",
               type: "POST",
               datatype: "html",
-              data: $("#recordingsForm").serialize(),
-              data:{ action: "getRecordingByID", idRecording : idRecording},
+              data: $("#settingsForm").serialize(),
               success: function(result){
-                  console.log(result);
-                  if (result == "updated"){
-                      console.log(result + " record.");
-                  }else{
-                      $("#urnCB").val(result);
+                  if (result != ""){
+                      console.log(result);
+                      if ($("#formatCB").val() != ''){
+                          $("#grid-data-format").bootgrid('reload');
+                      }
+                      if ($("#locationCB").val() != ''){
+                          $("#grid-data-location").bootgrid('reload');
+                      }
+                      if ($("#sourceCB").val() != ''){
+                          $("#grid-data-source").bootgrid('reload');
+                      }
+                      if ($("#titleCB").val() != ''){
+                          $("#grid-data-title").bootgrid('reload');
+                      }
+                      if ($("#personCB").val() != ''){
+                          $("#grid-data-person").bootgrid('reload');
+                      }
                   }
                   // $("#grid-data").bootgrid("reload");
                   $("#resetBtn").trigger("click");
               }
           });
       });
-      $("#sourceCB" ).autocomplete({
-          minLength: 1,
-          source: "../includes/jsonObjetDataList.php?table=sourceList&field=source",
-          select: function( event, ui ) {
-              $("#sourceCB").val( ui.item.label );
-              return false;
-          }
-      });
-      $("#locationCB" ).autocomplete({
-          minLength: 1,
-          source: "../includes/jsonObjetDataList.php?table=locationList&field=location",
-          select: function( event, ui ) {
-              $( "#locationCB" ).val( ui.item.label );
-              return false;
-          }
-      });
-      $("#titleCB" ).autocomplete({
-          minLength: 1,
-          source: "../includes/jsonObjetDataList.php?table=titleList&field=title",
-          select: function( event, ui ) {
-              $( "#titleCB" ).val( ui.item.label );
-              return false;
-          }
-      });
-      $("#subtitleCB" ).autocomplete({
-          minLength: 1,
-          source: "../includes/jsonObjetDataList.php?table=titleList&field=title",
-          select: function( event, ui ) {
-              $( "#subtitleCB" ).val( ui.item.label );
-              return false;
-          }
-      });
-      $("#personCB" ).autocomplete({
-          minLength: 1,
-          source: "../includes/jsonObjetDataList.php?table=personList&field=lastname",
-          select: function( event, ui ) {
-              $( "#personCB" ).val( ui.item.label );
-              return false;
-          }
-      });
-
-      $('.form-control').keyup(function(){
-          $("#copytext").val(updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), $("#urnCB").val()));
-      });
 
       $('#clearBtn').on('click', function(e) {
-          $("#recordingsForm").data('bootstrapValidator').resetForm();
           $("#resetBtn").trigger( "click" );
       });
 
