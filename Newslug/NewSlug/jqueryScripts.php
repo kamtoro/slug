@@ -16,11 +16,11 @@
 <!-- <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script> -->
 
 <!-- Bootstrap libraries -->
-<script src="js/bootstrap.min.js"></script>   
+<script src="/js/bootstrap.min.js"></script>   
 
 <!-- Bootstrap Validator -->
 <!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/> -->
-<script type="text/javascript" src="js/bootstrapValidator.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 
 <!-- Include bootgrid plugin (below), -->
 <script src="js/jquery.bootgrid-1.3.1/jquery.bootgrid.min.js"></script>
@@ -62,6 +62,7 @@
           var rowCountDatagrid = 50;
       }else{
           commandsDatagrid = "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\"row\"><div class=\"col-sm-12 actionBar\"> <p class=\"{{css.search}}\"></p> <button type=\"button\" class=\"btn btn-default\" id=\"deleteAllBtn\"><span class=\"glyphicon glyphicon-trash\"></span> Delete all</button> </div></div></div>";
+           
           var rowCountDatagrid = [10, 25, 50, -1];
       }
 

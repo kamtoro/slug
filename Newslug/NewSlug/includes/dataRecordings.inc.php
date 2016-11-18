@@ -53,6 +53,57 @@ if (!empty($_POST)) {
   }
 }
 
+function insertSettings($format, $source, $location, $title, $subtitle, $person, $urn){
+    if ($format != "") {
+        $format = $format;
+        if (checkList("format", "format", $format)) {
+            $query = insertSQLSetting("INSERT INTO Format(format) VALUES('{$format}')");
+            echo "Added $format to format list.";
+        } else {
+            echo "Value $format is already in format list." . "<br>";
+        }
+    }
+    if ($location != "") {
+        $location = ucwords(strtolower($location));
+        if (checkList("locationList", "location", $location)) {
+            $query = insertSQLSetting("INSERT INTO locationList(location) VALUES ('{$location}')");
+            MySQL_SubmitQuery($sql, $link) or die('Error, Query failed');
+            echo "added $location to location list. ".$query . "<br>";
+        } else {
+            echo "Value $location is already in location list." . "<br>";
+        }
+    }
+    if ($source != "") {
+        $source = ucwords(strtolower($source));
+        if (checkList("sourceList", "source", $source)) {
+            $query = insertSQLSetting("INSERT INTO sourceList(source) VALUES('{$source}')");
+            echo "added $source to source list. " .$query. "<br>";
+        } else {
+            echo "Value $source is already in source list." . "<br>";
+        }
+    }
+    if ($title != "") {
+        $title = ucwords(strtolower($title));
+        if (checkList("titleList", "title", $title)) {
+            $query = insertSQLSetting("INSERT INTO titleList(title) VALUES('{$title}')");
+            MySQL_SubmitQuery($sql, $link) or die('Error, Query failed');
+            echo "added $title to title list. ". $query . "<br>";
+        } else {
+            echo "Value $title is already in title list." . "<br>";
+        }
+    }
+    if ($personList != "") {
+        $person = ucwords(strtolower($person));
+        if (checkList("personList", "lastname", $person)) {
+            $query = insertSQLSetting("INSERT INTO personList(lastname) VALUES('{$person}')");
+            MySQL_SubmitQuery($sql, $link) or die('Error, Query failed');
+            echo "added $person to person list. ". $query ."<br>";
+        } else {
+            echo "Value $person is already in person list." . "<br>";
+        }
+    }
+}
+
 function insertSQLSetting($sql){
     try {
         $database = new Config();
@@ -65,6 +116,28 @@ function insertSQLSetting($sql){
         return false;
     }
     return $urn;
+}
+
+function checkList($table, $value, $listValue) {
+    try {
+        $sql = "SELECT * FROM " . $table . " WHERE " . $value . "='" . $listValue . "'";
+        $database = new Config();
+        $db = $database->getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt -> execute();
+
+        echo "Value received ".$sql;
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); // Same here
+        if($rows){
+            $db = $database->closeConnection();
+            return false;
+        } else {
+            $db = $database->closeConnection();
+            return true;
+        }
+    }catch (PDOException $e) {
+          return false;
+    }
 }
 
 function deleteRecordingFromDB($id) {

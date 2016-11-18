@@ -57,14 +57,12 @@ else   {
 }
    
 //NOTE: No security here please beef this up using a prepared statement - as is this is prone to SQL injection.
-$sql="SELECT id, replace(source,'\"','' ) as source, location, format, title, subtitle, person, urn, time FROM recordings WHERE $where ORDER BY $order_by $limit";
+$sql="SELECT * FROM recordings  ";
 
 $stmt=$conn->prepare($sql);
 $stmt->execute();
 $results_array=$stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$json=json_encode( $results_array );
-
+$json=json_encode($results_array);
 $nRows=$conn->query("SELECT count(*) FROM recordings  WHERE $where")->fetchColumn();   /* specific search then how many match */
 
 header('Content-Type: application/json'); //tell the broswer JSON is coming
