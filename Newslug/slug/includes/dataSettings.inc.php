@@ -194,6 +194,6 @@ function deleteRecording($id) {
       return 'Connection failed: '. $e->getMessage();
   }
 }
-
+ 
 
 ?> 
