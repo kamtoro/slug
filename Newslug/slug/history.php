@@ -2,7 +2,8 @@
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
  
 $records_per_page = 1000;
-define("_WEBPAGE_", "settings");
+
+define("_WEBPAGE_", "history");
  
 $from_record_num = ($records_per_page * $page) - $records_per_page;
 $table_source = "sourceList";
@@ -54,7 +55,7 @@ include_once 'includes/datalist.inc.php';
           </button>
           <a class="navbar-brand" rel="home" href="#" title="Slug - CBS News">
             <img style="max-width:290px; margin-top: -7px;"
-                 src="/img/logo.png">
+                 src="img/logo.png">
           </a>
     <!--       <a class="navbar-brand " href="index.html"><img class="img-responsive"       
            src="img/logo.png"></a> -->
@@ -63,8 +64,8 @@ include_once 'includes/datalist.inc.php';
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
             <li><a href="index.php"><span class="glyphicon glyphicon-home"></span>  Home</a></li>
-            <li class="active"><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-            <li><a href="history.php"><span class="glyphicon glyphicon-list"></span>  History</a></li>
+            <li><a href="settings.php"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+            <li class="active"><a href="#"><span class="glyphicon glyphicon-list"></span>  History</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><!-- <a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a> --></li>
@@ -88,47 +89,55 @@ include_once 'includes/datalist.inc.php';
 
         <div class="panel-body">
           <form role="form-inline" id="recordingsForm" >
+
             <div class="form-group col-xs-2">
-              <div class="">
-                <label for="formatCB" class="sr-only control-label">Format</label>
-                <input class="form-control" id="formatCB" name="formatCB" type="text" placeholder="Format..." maxlength="10">
-              </div>
+              <label for="sourceCB" class="sr-only control-label">Source</label>
+              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="15">
             </div>
 
             <div class="form-group col-xs-2">
               <div class="">
                 <label for="locationCB" class="sr-only control-label">Location</label>
-                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="20">
+                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="15">
+              </div>
+            </div>
+
+            <div class="form-group col-xs-2">          
+              <div class="">
+                <label for="titleCB" class="sr-only control-label">Title</label>
+                <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title..." maxlength="15">
+              </div>
+            </div>
+
+            <div class="form-group has-feedback col-xs-2">
+              <div class="">
+                <label for="subtitleCB" class="sr-only control-label">Subtitle</label>
+                <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle..." maxlength="15">
+              </div>
+            </div>
+
+            <div class="form-group has-feedback col-xs-2">          
+              <div class="">
+                <label for="personCB" class="sr-only control-label">For</label>
+                <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For..." maxlength="10">
               </div>
             </div>
 
             <div class="form-group col-xs-2">
-              <label for="sourceCB" class="sr-only control-label">Source</label>
-              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="25"/>
+                <select class="form-control" id="formatCB" name="formatCB" >
+                  <option>HD</option>
+                  <option>SD</option>
+                </select>
             </div>
-
-            <div class="form-group col-xs-3">          
-              <div class="">
-                <label for="titleCB" class="sr-only control-label">Title</label>
-                <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title/Subtitle..." maxlength="20">
-              </div>
-            </div>
-
-            <div class="form-group has-feedback col-xs-3">          
-              <div class="">
-                <label for="personCB" class="sr-only control-label">For</label>
-                <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For...">
-              </div>
-            </div>  
             <br>
-
+            
             <!-- HIDDEN URN AND ID FIELDS -->
             <input id="idCB" name="idCB" type="text" class="sr-only" >
             <input id="urnCB" name="urnCB" type="text " class="sr-only" >
-            <input id="savingMode" name="savingMode" type="text" value="insertSettings" class="sr-only" >
+            <input id="savingMode" name="savingMode" type="text" value="insert" class="sr-only" >
 
             <!-- #messages is where the messages are placed inside -->
-            <!--  <div class="form-group">
+           <!--  <div class="form-group">
                 <div class="col-md-9 col-md-offset-2">
                     <div id="messages"></div>
                 </div>
@@ -145,8 +154,6 @@ include_once 'includes/datalist.inc.php';
                 <span class="glyphicon glyphicon-refresh" aria-hidden="true"> </span> Clear
               </button>
             </div>
-
-
           </form>
         </div>
       </div>
@@ -160,61 +167,42 @@ include_once 'includes/datalist.inc.php';
     -->
 
     <div class="container">
-        <div class="panel with-nav-tabs panel-default">
-            <div class="panel-heading">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#formatTab" data-toggle="tab">Format</a></li>
-                    <li><a href="#locationTab" data-toggle="tab">Location</a></li>
-                    <li><a href="#sourceTab" data-toggle="tab">Source</a></li>
-                    <li><a href="#titleTab" data-toggle="tab">Title</a></li>
-                    <li><a href="#subtitleTab" data-toggle="tab">Subtitle</a></li>
-                    <li><a href="#personTab" data-toggle="tab">For</a></li>
-                </ul>
-            </div> 
-            <div class="panel-body">
-                <div class="tab-content">
-                    <div class="tab-pane fade in active" id="formatTab">
-                        <table id="grid-data-format" class="table table-condensed table-hover table-striped">
-                          <thead>
-                            <tr>
-                              <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="true">id</th>
-                              <th data-column-id="format" data-width="130px">Format</th>
-                              <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
-                            </tr>
-                          </thead>  
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="locationTab">
-                        Location
-                    </div>
-                    <div class="tab-pane fade" id="sourceTab">
-                        Source
-                    </div>
-                    <div class="tab-pane fade" id="titleTab">
-                        Title
-                    </div>
-                    <div class="tab-pane fade" id="subtitleTab">
-                        Subtitle
-                    </div>
-                    <div class="tab-pane fade" id="personTab">
-                        For
-                    </div>
-                </div>
-            </div>
+      <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Historical All Recordings</div>
+        <div class="panel-body">
+          
+            <!--define the table using the proper table tags, leaving the tbody tag empty -->
+            <table id="grid-data" class="table table-condensed table-hover table-striped">
+              <thead>
+                <tr>
+                  <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="false">id</th>
+                  <th data-column-id="urn" data-sortable="false" data-align="left" data-width="70">URN</th>
+                  <th data-column-id="source">Source</th>
+                  <th data-column-id="location" data-width="110px">Location</th>
+                  <th data-column-id="title" data-sortable="false">Title</th>
+                  <th data-column-id="subtitle" data-sortable="false">Subtitle</th>
+                  <th data-column-id="format" data-visible="false">Format</th>
+                  <th data-column-id="time" data-order="desc" data-visible="false">time</th>
+                  
+                  <th data-column-id="person" data-width="130px">Person</th>
+                  <!-- <th data-column-id="copyTextRow" data-formatter="copyTextRow" data-sortable="false">Copy</th> -->
+                  <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
+                </tr>
+              </thead>  
+            </table>
+          <!-- <button onClick="getServerData()">Refresh Data</button> 
+          <button onClick="clearGrid()">Clear table</button>  -->
         </div>
-    </div>  <!-- /DATAGRID SETTINGS -->
 
+      </div>
+    </div> <!-- /DATAGRID RECORDING -->
 
-    <?php include_once 'includes/jqueryScriptsSettingsPage.php'; ?> 
+    <?php include_once 'jqueryScripts.php'; ?>
     <!-- 
     ======================================================================
                                   FOOTER
     ======================================================================
-    -->
-
-<!--   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-
+     -->
   </body>
 </html>

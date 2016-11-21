@@ -91,45 +91,45 @@ include_once 'includes/datalist.inc.php';
           <form role="form-inline" id="recordingsForm" >
 
             <div class="form-group col-xs-2">
-                <select class="form-control" id="formatCB" name="formatCB" >
-                  <option>HD</option>
-                  <option>SD</option>
-                </select>
+              <label for="sourceCB" class="sr-only control-label">Source</label>
+              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="15">
             </div>
 
             <div class="form-group col-xs-2">
               <div class="">
                 <label for="locationCB" class="sr-only control-label">Location</label>
-                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location...">
+                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="15">
               </div>
-            </div>
-
-            <div class="form-group col-xs-2">
-              <label for="sourceCB" class="sr-only control-label">Source</label>
-              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..."/>
             </div>
 
             <div class="form-group col-xs-2">          
               <div class="">
                 <label for="titleCB" class="sr-only control-label">Title</label>
-                <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title...">
+                <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title..." maxlength="15">
               </div>
             </div>
 
             <div class="form-group has-feedback col-xs-2">
               <div class="">
                 <label for="subtitleCB" class="sr-only control-label">Subtitle</label>
-                <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle...">
+                <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle..." maxlength="15">
               </div>
             </div>
 
             <div class="form-group has-feedback col-xs-2">          
               <div class="">
                 <label for="personCB" class="sr-only control-label">For</label>
-                <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For...">
+                <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For..." maxlength="10">
               </div>
             </div>
             <br>
+
+            <div class="form-group col-xs-2">
+                <select class="form-control" id="formatCB" name="formatCB" >
+                  <option>HD</option>
+                  <option>SD</option>
+                </select>
+            </div>
             
             <!-- HIDDEN URN AND ID FIELDS -->
             <input id="idCB" name="idCB" type="text" class="sr-only" >

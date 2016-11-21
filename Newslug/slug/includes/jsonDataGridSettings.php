@@ -19,10 +19,26 @@ if (isset($_GET["settings"])){
         $field = "format";
         $tableSettings = "format";
     }
+    if ($_GET["settings"] == "location"){
+        $field = "location";
+        $tableSettings = "locationList";
+    }
+    if ($_GET["settings"] == "source"){
+        $field = "source";
+        $tableSettings = "sourceList";
+    }
+    if ($_GET["settings"] == "title"){
+        $field = "title";
+        $tableSettings = "titleList";
+    }
+    if ($_GET["settings"] == "person"){
+        $field = "lastname";
+        $tableSettings = "personList";
+    }
 }
 
 
-$order_by=$id;
+$order_by=$field;
 $rows=50;
 $current=1;
 $limit_l=($current * $rows) - ($rows);
@@ -35,21 +51,22 @@ if (isset($_REQUEST['sort']) && is_array($_REQUEST['sort']) ){
         $order_by.=" $key $value";
     }
 
-//Handles search  querystring sent from Bootgrid 
-if (isset($_REQUEST['searchPhrase']) ){
-    $search=trim($_REQUEST['searchPhrase']);
-    $where.= " AND (".$field." LIKE '%".$search."%') "; 
-}
+  //Handles search  querystring sent from Bootgrid 
+  if (isset($_REQUEST['searchPhrase']) ){
+      $search=trim($_REQUEST['searchPhrase']);
+      $where.= " AND (".$field." LIKE '%".$search."%') "; 
+  }
 
-//Handles determines where in the paging count this result set falls in
-if (isset($_REQUEST['rowCount']) )  
-  $rows=$_REQUEST['rowCount'];
+  //Handles determines where in the paging count this result set falls in
+  if (isset($_REQUEST['rowCount']) ){  
+      $rows=$_REQUEST['rowCount'];
+  }
 
  //calculate the low and high limits for the SQL LIMIT x,y clause
   if (isset($_REQUEST['current'])){
-    $current=$_REQUEST['current'];
-    $limit_l=($current * $rows) - ($rows);
-    $limit_h=$rows ;
+      $current=$_REQUEST['current'];
+      $limit_l=($current * $rows) - ($rows);
+      $limit_h=$rows ;
   }
 
   if ($rows==-1){
@@ -67,7 +84,7 @@ if (isset($_REQUEST['rowCount']) )
 
   $json=json_encode($results_array);
 
-  //$nRows=$conn->query("SELECT count(*) FROM recordings  WHERE $where")->fetchColumn();   /* specific search then how many match */
+  $nRows=$conn->query("SELECT count(*) FROM $tableSettings WHERE $where")->fetchColumn();   /* specific search then how many match */
 
   header('Content-Type: application/json'); //tell the broswer JSON is coming
 

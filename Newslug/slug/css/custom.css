@@ -38,3 +38,11 @@
 .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
     background-color: #4a9fe9;
 }
+
+.input-uppercase {text-transform: uppercase;}
+.input-uppercase::-webkit-input-placeholder {text-transform: none;}
+.input-uppercase::-moz-placeholder {text-transform: none;}
+
+.input-capitalize {text-transform: capitalize;}
+.input-capitilize::-webkit-input-placeholder {text-transform: none;}
+.input-capitilize::-moz-placeholder {text-transform: none;}

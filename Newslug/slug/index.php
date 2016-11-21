@@ -50,7 +50,7 @@ include_once 'includes/datalist.inc.php';
           </button>
           <a class="navbar-brand" rel="home" href="#" title="Slug - CBS News">
             <img style="max-width:290px; margin-top: -7px;"
-                 src="/img/logo.png">
+                 src="img/logo.png">
           </a>
     <!--       <a class="navbar-brand " href="index.html"><img class="img-responsive"       
            src="img/logo.png"></a> -->
@@ -86,43 +86,43 @@ include_once 'includes/datalist.inc.php';
           <form role="form-inline" id="recordingsForm" >
 
             <div class="form-group col-xs-2">
-                <select class="form-control" id="formatCB" name="formatCB" >
-                  <option>HD</option>
-                  <option>SD</option>
-                </select>
+              <label for="sourceCB" class="sr-only control-label">Source</label>
+              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="15">
             </div>
 
             <div class="form-group col-xs-2">
               <div class="">
                 <label for="locationCB" class="sr-only control-label">Location</label>
-                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location...">
+                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="15">
               </div>
-            </div>
-
-            <div class="form-group col-xs-2">
-              <label for="sourceCB" class="sr-only control-label">Source</label>
-              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..."/>
             </div>
 
             <div class="form-group col-xs-2">          
               <div class="">
                 <label for="titleCB" class="sr-only control-label">Title</label>
-                <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title...">
+                <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title..." maxlength="15">
               </div>
             </div>
 
             <div class="form-group has-feedback col-xs-2">
               <div class="">
                 <label for="subtitleCB" class="sr-only control-label">Subtitle</label>
-                <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle...">
+                <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle..." maxlength="15">
               </div>
             </div>
 
             <div class="form-group has-feedback col-xs-2">          
               <div class="">
                 <label for="personCB" class="sr-only control-label">For</label>
-                <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For...">
+                <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For..." maxlength="10">
               </div>
+            </div>
+
+            <div class="form-group col-xs-2">
+                <select class="form-control" id="formatCB" name="formatCB" >
+                  <option>HD</option>
+                  <option>SD</option>
+                </select>
             </div>
             <br>
             
@@ -172,15 +172,15 @@ include_once 'includes/datalist.inc.php';
               <thead>
                 <tr>
                   <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="false">id</th>
-                  <th data-column-id="urn" data-sortable="false" data-align="left" data-width="70">URN</th>
+                  <th data-column-id="urn" data-sortable="false" data-align="left" data-width="65">URN</th>
+                  <th data-column-id="source">Source</th>
                   <th data-column-id="location" data-width="110px">Location</th>
-                  <th data-column-id="format" data-visible="false">Format</th>
-                  <th data-column-id="source">Source</th> 
                   <th data-column-id="title" data-sortable="false">Title</th>
                   <th data-column-id="subtitle" data-sortable="false">Subtitle</th>
                   <th data-column-id="time" data-order="desc" data-visible="false">time</th>
                   
                   <th data-column-id="person" data-width="130px">Person</th>
+                  <th data-column-id="format" data-visible="true" data-width="74px">Format</th>
                   <!-- <th data-column-id="copyTextRow" data-formatter="copyTextRow" data-sortable="false">Copy</th> -->
                   <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
                 </tr>

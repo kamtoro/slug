@@ -1,22 +1,22 @@
-<!-- <script src="/js/jquery-1.12.4.min.js"></script> -->
+<!-- <script src="js/jquery-1.12.4.min.js"></script> -->
 
 <!-- JQuery libraries -->
-<!-- <script src="/js/jquery-1.11.1.min.js"></script> -->
-<script src="/js/jquery-1.12.4.min.js"></script>
+<!-- <script src="js/jquery-1.11.1.min.js"></script> -->
+<script src="js/jquery-1.12.4.min.js"></script>
 
-<script src="/js/jquery-ui.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="css/jquery-ui.css">
 
 <!-- Autocomplete -->
-<!-- <script type="text/javascript" src="/js/jquery.ui.autocomplete.html.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/autocomplete.css"> -->
+<!-- <script type="text/javascript" src="js/jquery.ui.autocomplete.html.js"></script>
+<link rel="stylesheet" type="text/css" href="css/autocomplete.css"> -->
 
 
 <!-- Tether for Bootstrap --> 
 <!-- <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script> -->
 
 <!-- Bootstrap libraries -->
-<script src="/js/bootstrap.min.js"></script>   
+<script src="js/bootstrap.min.js"></script>   
 
 <!-- Bootstrap Validator -->
 <!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/> -->
@@ -48,10 +48,10 @@
 
 
 <!-- Local js Library -->
-<script src="/js/functionsJS.js"> </script>
+<script src="js/functionsJS.js"> </script>
 
 <!-- Clipboard.js Libary -->
-<script src="/js/dist/clipboard.min.js"></script>
+<script src="js/dist/clipboard.min.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -82,7 +82,7 @@
               header: commandsDatagrid
               // <p class=\"{{css.actions}}\"> To add Refresh, Pagination, and column selector buttons 
           },
-          url: "/includes/jsonDataGridRecordings.php?webpage="+webpage,
+          url: "includes/jsonDataGridRecordings.php?webpage="+webpage,
           
           formatters: {
               "link": function(column, row){
@@ -99,7 +99,7 @@
 
               var idRecording = $(this).data("row-id");
               $.ajax({
-                  url: "/includes/dataRecordings.inc.php",
+                  url: "includes/dataRecordings.inc.php",
                   type: 'POST',
                   dataType: "json",
                   data:{ action: "getRecordingByID", idRecording : idRecording}, 
@@ -130,7 +130,7 @@
               }
 
               $.ajax({
-                  url: "/includes/dataRecordings.inc.php",
+                  url: "includes/dataRecordings.inc.php",
                   type: 'POST',
                   dataType: "html",
                   data:{ action: actionDelete, idRecording : idRecording}, 
@@ -152,7 +152,7 @@
           if (webpage == "index"){
               $("#deleteAllBtn").on("click", function() {
                   $.ajax({
-                          url: "/includes/dataRecordings.inc.php",
+                          url: "includes/dataRecordings.inc.php",
                           type: 'POST',
                           dataType: "html",
                           data:{ action: "deleteAllRecordings"}, 
@@ -167,43 +167,90 @@
 
       $("#sourceCB" ).autocomplete({
           minLength: 1,
-          source: "../includes/jsonObjetDataList.php?table=sourceList&field=source",
+          source: "includes/jsonObjetDataList.php?table=sourceList&field=source",
+
           select: function( event, ui ) {
               $("#sourceCB").val( ui.item.label );
               return false;
           }
+      }).on('input', function() {
+        var c = this.selectionStart,
+            r = /[^ a-z_0-9-]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+          $(this).val(v.replace(r, ''));
+          c--;
+        }
+        this.setSelectionRange(c, c);
       });
+
       $("#locationCB" ).autocomplete({
           minLength: 1,
-          source: "../includes/jsonObjetDataList.php?table=locationList&field=location",
+          source: "includes/jsonObjetDataList.php?table=locationList&field=location",
           select: function( event, ui ) {
               $( "#locationCB" ).val( ui.item.label );
               return false;
           }
+      }).on('input', function() {
+        var c = this.selectionStart,
+            r = /[^ a-z_0-9-]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+          $(this).val(v.replace(r, ''));
+          c--;
+        }
+        this.setSelectionRange(c, c);
       });
       $("#titleCB" ).autocomplete({
           minLength: 1,
-          source: "../includes/jsonObjetDataList.php?table=titleList&field=title",
+          source: "includes/jsonObjetDataList.php?table=titleList&field=title",
           select: function( event, ui ) {
               $( "#titleCB" ).val( ui.item.label );
               return false;
           }
+      }).on('input', function() {
+        var c = this.selectionStart,
+            r = /[^ a-z_0-9-]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+          $(this).val(v.replace(r, ''));
+          c--;
+        }
+        this.setSelectionRange(c, c);
       });
       $("#subtitleCB" ).autocomplete({
           minLength: 1,
-          source: "../includes/jsonObjetDataList.php?table=titleList&field=title",
+          source: "includes/jsonObjetDataList.php?table=titleList&field=title",
           select: function( event, ui ) {
               $( "#subtitleCB" ).val( ui.item.label );
               return false;
           }
+      }).on('input', function() {
+        var c = this.selectionStart,
+            r = /[^ a-z_0-9-]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+          $(this).val(v.replace(r, ''));
+          c--;
+        }
+        this.setSelectionRange(c, c);
       });
       $("#personCB" ).autocomplete({
           minLength: 1,
-          source: "../includes/jsonObjetDataList.php?table=personList&field=lastname",
+          source: "includes/jsonObjetDataList.php?table=personList&field=lastname",
           select: function( event, ui ) {
               $( "#personCB" ).val( ui.item.label );
               return false;
           }
+      }).on('input', function() {
+        var c = this.selectionStart,
+            r = /[^ a-z_0-9-]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+          $(this).val(v.replace(r, ''));
+          c--;
+        }
+        this.setSelectionRange(c, c);
       });
       
       $("#saveBtn").on("click", function() {
@@ -212,7 +259,7 @@
               $('#recordingsForm').bootstrapValidator('validate');
           }else{
               $.ajax({
-                  url: "/includes/dataRecordings.inc.php",
+                  url: "includes/dataRecordings.inc.php",
                   type: 'POST',
                   datatype: "html",
                   data: $("#recordingsForm").serialize(),
