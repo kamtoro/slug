@@ -83,43 +83,43 @@ include_once 'includes/datalist.inc.php';
     <div class="container">
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <div class="panel-title">New Recording</div>
+          <div class="panel-title">New Settings Value</div>
         </div>
 
         <div class="panel-body">
           <form role="form-inline" id="settingsForm" >
+
+
             <div class="form-group col-xs-2">
-              <div class="">
-                <label for="formatCB" class="sr-only control-label">Format</label>
-                <input class="form-control" id="formatCB" name="formatCB" type="text" placeholder="Format..." maxlength="10">
-              </div>
+              <label for="sourceCB" class="sr-only control-label">Source</label>
+              <input class="form-control input-uppercase" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="25"/>
             </div>
 
             <div class="form-group col-xs-2">
               <div class="">
                 <label for="locationCB" class="sr-only control-label">Location</label>
-                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="20">
+                <input class="form-control input-uppercase" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="20">
               </div>
-            </div>
-
-            <div class="form-group col-xs-2">
-              <label for="sourceCB" class="sr-only control-label">Source</label>
-              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="25"/>
             </div>
 
             <div class="form-group col-xs-3">          
               <div class="">
                 <label for="titleCB" class="sr-only control-label">Title</label>
-                <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title/Subtitle..." maxlength="20">
+                <input class="form-control input-capitalize" type="text" id="titleCB" name="titleCB" placeholder="Title/Subtitle..." maxlength="20">
               </div>
             </div>
 
             <div class="form-group has-feedback col-xs-3">          
               <div class="">
                 <label for="personCB" class="sr-only control-label">For</label>
-                <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For...">
+                <input class="form-control input-capitalize" type="text" id="personCB" name="personCB" placeholder="Person...">
               </div>
             </div>  
+
+            <div class="form-group col-xs-2">
+                <label for="formatCB" class="sr-only control-label">Format</label>
+                <input class="form-control input-uppercase" id="formatCB" name="formatCB" type="text" placeholder="Format..." maxlength="10">
+            </div>
             <br>
 
             <!-- HIDDEN URN AND ID FIELDS -->
@@ -163,28 +163,16 @@ include_once 'includes/datalist.inc.php';
         <div class="panel with-nav-tabs panel-default">
             <div class="panel-heading">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#formatTab" data-toggle="tab">Format</a></li>
-                    <li><a href="#locationTab" data-toggle="tab">Location</a></li>
+                    <li class="active"><a href="#locationTab" data-toggle="tab">Location</a></li>
                     <li><a href="#sourceTab" data-toggle="tab">Source</a></li>
                     <li><a href="#titleTab" data-toggle="tab">Title</a></li>
                     <li><a href="#personTab" data-toggle="tab">For</a></li>
+                    <li><a href="#formatTab" data-toggle="tab">Format</a></li>
                 </ul>
             </div> 
             <div class="panel-body">
                 <div class="tab-content">
-                    <div class="tab-pane fade in active" id="formatTab">
-                        <table id="grid-data-format" class="table table-condensed table-hover table-striped">
-                          <thead>
-                            <tr>
-                              <th data-column-id="id" data-width="50px" data-type="numeric" data-identifier="true" data-visible="true">id</th>
-                              <th data-column-id="format" data-width="130px">Format</th>
-                              <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
-                            </tr>
-                          </thead>  
-                        </table>
-                    </div>
-
-                    <div class="tab-pane fade" id="locationTab">
+                    <div class="tab-pane fade in active" id="locationTab">
                         <table id="grid-data-location" class="table table-condensed table-hover table-striped">
                           <thead>
                             <tr>
@@ -193,8 +181,9 @@ include_once 'includes/datalist.inc.php';
                               <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
                             </tr>
                           </thead>
-                        </table>
+                        </table>  
                     </div>
+
                     <div class="tab-pane fade" id="sourceTab">
                         <table id="grid-data-source" class="table table-condensed table-hover table-striped">
                           <thead>
@@ -229,6 +218,17 @@ include_once 'includes/datalist.inc.php';
                         </table>
                     </div>
                     
+                    <div class="tab-pane fade" id="formatTab">
+                        <table id="grid-data-format" class="table table-condensed table-hover table-striped">
+                          <thead>
+                            <tr>
+                              <th data-column-id="id" data-width="50px" data-type="numeric" data-identifier="true" data-visible="true">id</th>
+                              <th data-column-id="format" data-width="130px">Format</th>
+                              <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
+                            </tr>
+                          </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

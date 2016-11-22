@@ -254,10 +254,13 @@
       });
       
       $("#saveBtn").on("click", function() {
-
+          // Validation of Source, Location and Person
           if ($("#sourceCB").val() == ''|| $("#locationCB").val() == ''|| $("#personCB").val() == '') {
               $('#recordingsForm').bootstrapValidator('validate');
           }else{
+              //$("#sourceCB").val($("#sourceCB").value.toUpperCase());
+              //$("#locationCB").val($("#locationCB").value.toUpperCase());
+
               $.ajax({
                   url: "includes/dataRecordings.inc.php",
                   type: 'POST',
@@ -277,6 +280,24 @@
                   }
               });
           }
+      });
+
+      $('#sourceCB').blur(function() {
+          this.value = this.value.toUpperCase();
+      });
+      $('#locationCB').blur(function() {
+          this.value = this.value.toUpperCase();
+      });
+
+      //when the user presses a key and the value of the `textarea` is changed, the new value will have all capitalized words
+      $('#titleCB').blur(function() {
+          $(this).capitalize();
+      });
+      $('#subtitleCB').blur(function() {
+          $(this).capitalize();
+      });
+      $('#personCB').blur(function() {
+          $(this).capitalize();
       });
 
       $('.form-control').keyup(function(){
@@ -310,7 +331,7 @@
           console.error('Error Trigger:', e.trigger);
       });
       
-      // $(document).ready(function() {
+      //Validation of Fields
       $('#recordingsForm').bootstrapValidator({
           framework: 'bootstrap',
           // container: '#messages',
@@ -323,6 +344,7 @@
           //     validating: 'glyphicon glyphicon-refresh'
           // },
           fields: {
+            
               sourceCB: {
                   row: '.col-xs-3',
                   validators: {

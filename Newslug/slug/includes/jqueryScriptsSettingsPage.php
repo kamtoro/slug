@@ -1,27 +1,27 @@
 <!-- JQuery libraries -->
-<script src="../js/jquery-1.12.4.min.js"></script>
-<script src="../js/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="../css/jquery-ui.css">
+<script src="js/jquery-1.12.4.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="css/jquery-ui.css">
 
 <!-- Autocomplete --><!-- 
 <script type="text/javascript" src="../js/jquery.ui.autocomplete.html.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/autocomplete.css"> -->
 
 <!-- Bootstrap libraries -->
-<script src="../js/bootstrap.min.js"></script>   
+<script src="js/bootstrap.min.js"></script>   
 
 <!-- Bootstrap Validator -->
 <!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/> -->
-<script type="text/javascript" src="../js/bootstrapValidator.min.js"></script>
+<script type="text/javascript" src="js/bootstrapValidator.min.js"></script>
 
 <!-- Include bootgrid plugin (below), -->
-<script src="../js/jquery.bootgrid-1.3.1/jquery.bootgrid.min.js"></script>
-<link href="../js/jquery.bootgrid-1.3.1/jquery.bootgrid.min.css" rel="stylesheet">
+<script src="js/jquery.bootgrid-1.3.1/jquery.bootgrid.min.js"></script>
+<link href="js/jquery.bootgrid-1.3.1/jquery.bootgrid.min.css" rel="stylesheet">
 
 
 
 <!-- Local js Library -->
-<script src="../js/functionsJS.js"> </script>
+<script src="js/functionsJS.js"> </script>
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -41,7 +41,7 @@
                   id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
               };
           },
-          url: "/includes/jsonDataGridSettings.php?settings=format",
+          url: "includes/jsonDataGridSettings.php?settings=format",
           data:{ id: "id", field: "format", table: "format"}, 
           templates: {
               header: commandsDatagrid
@@ -59,7 +59,7 @@
               var tableToDelete = "format";
 
               $.ajax({
-                  url: "/includes/dataSettings.inc.php",
+                  url: "includes/dataSettings.inc.php",
                   type: 'POST',
                   dataType: "html",
                   data:{ action: actionDelete, idSetting : idSetting, tableToDelete: tableToDelete}, 
@@ -83,7 +83,7 @@
                   id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
               };
           },
-          url: "/includes/jsonDataGridSettings.php?settings=location",
+          url: "includes/jsonDataGridSettings.php?settings=location",
           data:{ id: "id", field: "location", table: "locationList"}, 
           templates: {
               header: commandsDatagrid
@@ -101,7 +101,7 @@
               var tableToDelete = "locationList";
 
               $.ajax({
-                  url: "/includes/dataSettings.inc.php",
+                  url: "includes/dataSettings.inc.php",
                   type: 'POST',
                   dataType: "html",
                   data:{ action: actionDelete, idSetting : idSetting, tableToDelete: tableToDelete}, 
@@ -126,7 +126,7 @@
                   id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
               };
           },
-          url: "/includes/jsonDataGridSettings.php?settings=source",
+          url: "includes/jsonDataGridSettings.php?settings=source",
           data:{ id: "id", field: "source", table: "sourceList"}, 
           templates: {
               header: commandsDatagrid
@@ -144,7 +144,7 @@
               var tableToDelete = "sourceList";
 
               $.ajax({
-                  url: "/includes/dataSettings.inc.php",
+                  url: "includes/dataSettings.inc.php",
                   type: 'POST',
                   dataType: "html",
                   data:{ action: actionDelete, idSetting : idSetting, tableToDelete: tableToDelete}, 
@@ -167,7 +167,7 @@
                   id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
               };
           },
-          url: "/includes/jsonDataGridSettings.php?settings=title",
+          url: "includes/jsonDataGridSettings.php?settings=title",
           data:{ id: "id", field: "title", table: "titleList"}, 
           templates: {
               header: commandsDatagrid
@@ -185,7 +185,7 @@
               var tableToDelete = "titleList";
 
               $.ajax({
-                  url: "/includes/dataSettings.inc.php",
+                  url: "includes/dataSettings.inc.php",
                   type: 'POST',
                   dataType: "html",
                   data:{ action: actionDelete, idSetting : idSetting, tableToDelete: tableToDelete}, 
@@ -209,7 +209,7 @@
                   id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
               };
           },
-          url: "/includes/jsonDataGridSettings.php?settings=person",
+          url: "includes/jsonDataGridSettings.php?settings=person",
           data:{ id: "id", field: "person", table: "personList"}, 
           templates: {
               header: commandsDatagrid
@@ -227,7 +227,7 @@
               var tableToDelete = "personList";
 
               $.ajax({
-                  url: "/includes/dataSettings.inc.php",
+                  url: "includes/dataSettings.inc.php",
                   type: 'POST',
                   dataType: "html",
                   data:{ action: actionDelete, idSetting : idSetting, tableToDelete: tableToDelete}, 
@@ -239,10 +239,32 @@
           });
       });
       
+
+      $('#sourceCB').blur(function() {
+          this.value = this.value.toUpperCase();
+      });
+      $('#locationCB').blur(function() {
+          this.value = this.value.toUpperCase();
+      });
+
+      //when the user presses a key and the value of the `textarea` is changed, the new value will have all capitalized words
+      $('#titleCB').blur(function() {
+          $(this).capitalize();
+      });
+      $('#subtitleCB').blur(function() {
+          $(this).capitalize();
+      });
+      $('#personCB').blur(function() {
+          $(this).capitalize();
+      });
+      $('#formatCB').blur(function() {
+          this.value = this.value.toUpperCase();
+      });
+      
       $("#saveBtn").on("click", function() {
           console.log("Entro al click");
           $.ajax({
-              url: "/includes/dataSettings.inc.php",
+              url: "includes/dataSettings.inc.php",
               type: "POST",
               datatype: "html",
               data: $("#settingsForm").serialize(),
@@ -269,6 +291,70 @@
                   $("#resetBtn").trigger("click");
               }
           });
+      });
+
+      //Input text field validation
+      $("#sourceCB").on('input', function() {
+        var c = this.selectionStart,
+            r = /[^ a-z_0-9-]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+          $(this).val(v.replace(r, ''));
+          c--;
+        }
+        this.setSelectionRange(c, c);
+      });
+
+      $("#locationCB" ).on('input', function() {
+        var c = this.selectionStart,
+            r = /[^ a-z_0-9-]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+          $(this).val(v.replace(r, ''));
+          c--;
+        }
+        this.setSelectionRange(c, c);
+      });
+      $("#titleCB" ).on('input', function() {
+        var c = this.selectionStart,
+            r = /[^ a-z_0-9-]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+          $(this).val(v.replace(r, ''));
+          c--;
+        }
+        this.setSelectionRange(c, c);
+      });
+      $("#subtitleCB" ).on('input', function() {
+        var c = this.selectionStart,
+            r = /[^ a-z_0-9-]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+          $(this).val(v.replace(r, ''));
+          c--;
+        }
+        this.setSelectionRange(c, c);
+      });
+
+      $("#personCB").on('input', function() {
+        var c = this.selectionStart,
+            r = /[^ a-z_0-9-]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+          $(this).val(v.replace(r, ''));
+          c--;
+        }
+        this.setSelectionRange(c, c);
+      });
+      $("#formatCB").on('input', function() {
+        var c = this.selectionStart,
+            r = /[^ a-z_0-9-]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+          $(this).val(v.replace(r, ''));
+          c--;
+        }
+        this.setSelectionRange(c, c);
       });
 
       $('#clearBtn').on('click', function(e) {

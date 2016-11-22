@@ -87,34 +87,34 @@ include_once 'includes/datalist.inc.php';
 
             <div class="form-group col-xs-2">
               <label for="sourceCB" class="sr-only control-label">Source</label>
-              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="15">
+              <input class="form-control input-uppercase" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="15">
             </div>
 
             <div class="form-group col-xs-2">
               <div class="">
                 <label for="locationCB" class="sr-only control-label">Location</label>
-                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="15">
+                <input class="form-control input-uppercase" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="15">
               </div>
             </div>
 
             <div class="form-group col-xs-2">          
               <div class="">
                 <label for="titleCB" class="sr-only control-label">Title</label>
-                <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title..." maxlength="15">
+                <input class="form-control input-capitalize" type="text" id="titleCB" name="titleCB" placeholder="Title..." maxlength="15">
               </div>
             </div>
 
             <div class="form-group has-feedback col-xs-2">
               <div class="">
                 <label for="subtitleCB" class="sr-only control-label">Subtitle</label>
-                <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle..." maxlength="15">
+                <input class="form-control input-capitalize" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle..." maxlength="15">
               </div>
             </div>
 
             <div class="form-group has-feedback col-xs-2">          
               <div class="">
                 <label for="personCB" class="sr-only control-label">For</label>
-                <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For..." maxlength="10">
+                <input class="form-control input-capitalize" type="text" id="personCB" name="personCB" placeholder="For..." maxlength="10">
               </div>
             </div>
 
@@ -172,12 +172,12 @@ include_once 'includes/datalist.inc.php';
               <thead>
                 <tr>
                   <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="false">id</th>
-                  <th data-column-id="urn" data-sortable="false" data-align="left" data-width="65">URN</th>
+                  <th data-column-id="urn" data-order="desc" data-sortable="true" data-align="left" data-width="65">URN</th>
                   <th data-column-id="source">Source</th>
                   <th data-column-id="location" data-width="110px">Location</th>
                   <th data-column-id="title" data-sortable="false">Title</th>
                   <th data-column-id="subtitle" data-sortable="false">Subtitle</th>
-                  <th data-column-id="time" data-order="desc" data-visible="false">time</th>
+                  <th data-column-id="time" data-visible="false">time</th>
                   
                   <th data-column-id="person" data-width="130px">Person</th>
                   <th data-column-id="format" data-visible="true" data-width="74px">Format</th>

@@ -92,34 +92,34 @@ include_once 'includes/datalist.inc.php';
 
             <div class="form-group col-xs-2">
               <label for="sourceCB" class="sr-only control-label">Source</label>
-              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="15">
+              <input class="form-control input-uppercase" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="15">
             </div>
 
             <div class="form-group col-xs-2">
               <div class="">
                 <label for="locationCB" class="sr-only control-label">Location</label>
-                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="15">
+                <input class="form-control input-uppercase" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="15">
               </div>
             </div>
 
             <div class="form-group col-xs-2">          
               <div class="">
                 <label for="titleCB" class="sr-only control-label">Title</label>
-                <input class="form-control" type="text" id="titleCB" name="titleCB" placeholder="Title..." maxlength="15">
+                <input class="form-control input-capitalize" type="text" id="titleCB" name="titleCB" placeholder="Title..." maxlength="15">
               </div>
             </div>
 
             <div class="form-group has-feedback col-xs-2">
               <div class="">
                 <label for="subtitleCB" class="sr-only control-label">Subtitle</label>
-                <input class="form-control" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle..." maxlength="15">
+                <input class="form-control input-capitalize" id="subtitleCB" name="subtitleCB" type="text" id="subtitle" placeholder="Subtitle..." maxlength="15">
               </div>
             </div>
 
             <div class="form-group has-feedback col-xs-2">          
               <div class="">
                 <label for="personCB" class="sr-only control-label">For</label>
-                <input class="form-control" type="text" id="personCB" name="personCB" placeholder="For..." maxlength="10">
+                <input class="form-control input-capitalize" type="text" id="personCB" name="personCB" placeholder="For..." maxlength="10">
               </div>
             </div>
 
