@@ -92,13 +92,13 @@ include_once 'includes/datalist.inc.php';
 
             <div class="form-group col-xs-2">
               <label for="sourceCB" class="sr-only control-label">Source</label>
-              <input class="form-control input-uppercase" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="25"/>
+              <input class="form-control" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="25"/>
             </div>
 
             <div class="form-group col-xs-2">
               <div class="">
                 <label for="locationCB" class="sr-only control-label">Location</label>
-                <input class="form-control input-uppercase" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="20">
+                <input class="form-control" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="20">
               </div>
             </div>
 
@@ -163,28 +163,16 @@ include_once 'includes/datalist.inc.php';
         <div class="panel with-nav-tabs panel-default">
             <div class="panel-heading">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#locationTab" data-toggle="tab">Location</a></li>
-                    <li><a href="#sourceTab" data-toggle="tab">Source</a></li>
+                    <li class="active"><a href="#sourceTab" data-toggle="tab">Source</a></li>
+                    <li><a href="#locationTab" data-toggle="tab">Location</a></li>
                     <li><a href="#titleTab" data-toggle="tab">Title</a></li>
-                    <li><a href="#personTab" data-toggle="tab">For</a></li>
+                    <li><a href="#personTab" data-toggle="tab">Person</a></li>
                     <li><a href="#formatTab" data-toggle="tab">Format</a></li>
                 </ul>
             </div> 
             <div class="panel-body">
                 <div class="tab-content">
-                    <div class="tab-pane fade in active" id="locationTab">
-                        <table id="grid-data-location" class="table table-condensed table-hover table-striped">
-                          <thead>
-                            <tr>
-                              <th data-column-id="id" data-width="50px" data-type="numeric" data-identifier="true" data-visible="true">id</th>
-                              <th data-column-id="location" data-width="130px">Location</th>
-                              <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
-                            </tr>
-                          </thead>
-                        </table>  
-                    </div>
-
-                    <div class="tab-pane fade" id="sourceTab">
+                    <div class="tab-pane fade in active" id="sourceTab">
                         <table id="grid-data-source" class="table table-condensed table-hover table-striped">
                           <thead>
                             <tr>
@@ -194,6 +182,19 @@ include_once 'includes/datalist.inc.php';
                             </tr>
                           </thead>
                         </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="locationTab">
+                        <table id="grid-data-location" class="table table-condensed table-hover table-striped">
+                          <thead>
+                            <tr>
+                              <th data-column-id="id" data-width="50px" data-type="numeric" data-identifier="true" data-visible="true">id</th>
+                              <th data-column-id="location" data-width="130px">Location</th>
+                              <th data-column-id="link" data-formatter="link" data-sortable="false" data-align="right" data-width="120px"></th>
+                            </tr>
+                          </thead>
+                        </table>  
+
                     </div>
                     <div class="tab-pane fade" id="titleTab">
                         <table id="grid-data-title" class="table table-condensed table-hover table-striped">

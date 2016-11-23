@@ -47,7 +47,7 @@ function insertSettings($format, $source, $location, $title, $person){
         }
     }
     if ($location != "") {
-        $location = ucwords(strtolower($location));
+        //$location = ucwords(strtolower($location)); CAPITALIZATION
         if (checkList("locationList", "location", $location)) {
             $query = insertSQLSetting("INSERT INTO locationList(location) VALUES ('{$location}')");
             echo "Added $location to location list.<br>";
@@ -56,7 +56,7 @@ function insertSettings($format, $source, $location, $title, $person){
         }
     }
     if ($source != "") {
-        $source = ucwords(strtolower($source));
+        //$source = ucwords(strtolower($source)); CAPITALIZATION
         if (checkList("sourceList", "source", $source)) {
             $query = insertSQLSetting("INSERT INTO sourceList(source) VALUES('{$source}')");
             echo "Added $source to source list. " .$query. "<br>";

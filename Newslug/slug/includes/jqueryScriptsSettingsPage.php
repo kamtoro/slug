@@ -251,9 +251,6 @@
       $('#titleCB').blur(function() {
           $(this).capitalize();
       });
-      $('#subtitleCB').blur(function() {
-          $(this).capitalize();
-      });
       $('#personCB').blur(function() {
           $(this).capitalize();
       });

@@ -12,8 +12,8 @@ function updateTextForClipboard(format, source, location, title, subtitle, perso
 		}else{
 			outputStr = urn + " " + source;
 		}
+		outputStr = outputStr.trim() + " - " + title;
 	}
-	outputStr = outputStr.trim() + " - " + title;
 	outputStr = outputStr.trim();
 	if (subtitle != "") {
 		outputStr = outputStr + " (" + subtitle + ")";
@@ -21,6 +21,11 @@ function updateTextForClipboard(format, source, location, title, subtitle, perso
 	if (person != "") {
 		outputStr = outputStr + " for " + person;
 	}
+	if (format != "") {
+		outputStr = outputStr + " [" + format + "]";
+	}
+
+
 	return outputStr;
 }
 
