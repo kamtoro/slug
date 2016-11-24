@@ -1,4 +1,4 @@
-<!-- <script src="js/jquery-1.12.4.min.js"></script> -->
+  <!-- <script src="js/jquery-1.12.4.min.js"></script> -->
 
 <!-- JQuery libraries -->
 <!-- <script src="js/jquery-1.11.1.min.js"></script> -->
@@ -331,7 +331,24 @@
           console.error('Error Trigger:', e.trigger);
       });
       
-      //Validation of Fields
+
+
+      $("#recordingsForm").formValidation({
+          framework: 'bootstrap',
+          err: {
+              container: 'tooltip'
+          },
+          custom: {
+              fileLength: function ($el) {
+                return checkTotalFileLength()
+              }
+          },
+          errors: {
+              fileLength: "That's not an odd number!"
+          }
+      });
+
+      /*/Validation of Fields
       $('#recordingsForm').bootstrapValidator({
           framework: 'bootstrap',
           // container: '#messages',
@@ -343,24 +360,33 @@
           //     invalid: 'glyphicon glyphicon-remove',
           //     validating: 'glyphicon glyphicon-refresh'
           // },
+
+          custom: {
+              fileLength: function ($el) {
+                return checkTotalFileLength()
+              }
+          },
+          errors: {
+              fileLength: "That's not an odd number!"
+          },
           fields: {
             
-              sourceCB: {
-                  row: '.col-xs-3',
-                  validators: {
-                      notEmpty: {
-                          message: 'Source is required and can not be empty'
-                      }
-                  }
-              },
-              locationCB: {
-                  row: '.col-xs-3',
-                  validators: {
-                      notEmpty: {
-                          message: 'Location is required and cannot be empty'
-                      }
-                  }
-              },
+              // sourceCB: {
+              //     row: '.col-xs-3',
+              //     validators: {
+              //         notEmpty: {
+              //             message: 'Source is required and can not be empty'
+              //         }
+              //     }
+              // },
+              // locationCB: {
+              //     row: '.col-xs-3',
+              //     validators: {
+              //         notEmpty: {
+              //             message: 'Location is required and cannot be empty'
+              //         }
+              //     }
+              // },
               personCB: {
                   row: '.col-xs-3',
                   validators: {
@@ -372,18 +398,19 @@
           }
       })
       .on('err.field.fv', function(e, data) {
-          // Get the tooltip
+          / /  Get the tooltip
           var $icon = data.element.data('fv.icon'),
           title = $icon.data('bs.tooltip').getTitle();
           
-          // Destroy the old tooltip and create a new one positioned to the right
+          / / Destroy the old tooltip and create a new one positioned to the right
           $icon.tooltip('destroy').tooltip({
               html: true,
               placement: 'right',
               title: title,
               container: 'body'
           });
-      });
+      });**/
+
       $('#clearBtn').on('click', function(e) {
           $("#recordingsForm").data('bootstrapValidator').resetForm();
           $("#resetBtn").trigger( "click" );
@@ -405,10 +432,20 @@
               data:{ action: "getURNValue"}, 
               success: function(result) {
                   $("#urnCB").val(result);
-                  console.log("Entro al getURNVal");
+                  
               }
           });
       }
+
+      function checkTotalFileLength() {
+          console.log("aca valido el chuzo");
+          var fileName = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), "XXXXXX");
+          if (fileName.length < 51){
+              return true;
+          }else{
+              return false;
+          }
+      };
   });
 </script>
 

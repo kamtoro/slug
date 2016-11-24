@@ -87,14 +87,13 @@ include_once 'includes/datalist.inc.php';
 
             <div class="form-group col-xs-2">
               <label for="sourceCB" class="sr-only control-label">Source</label>
-              <input class="form-control input-uppercase" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." maxlength="15">
+              <input class="form-control input-uppercase" id="sourceCB" name="sourceCB" type="text" placeholder="Source..." data-fileLength="fileLength">
+              <span class="help-block with-errors"></span>
             </div>
 
             <div class="form-group col-xs-2">
-              <div class="">
                 <label for="locationCB" class="sr-only control-label">Location</label>
-                <input class="form-control input-uppercase" id="locationCB" name="locationCB" type="text" placeholder="Location..." maxlength="15">
-              </div>
+                <input class="form-control input-uppercase" id="locationCB" name="locationCB" type="text" placeholder="Location...">
             </div>
 
             <div class="form-group col-xs-2">          
