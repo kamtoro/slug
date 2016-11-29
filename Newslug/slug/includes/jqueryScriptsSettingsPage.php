@@ -259,7 +259,7 @@
       });
       
       $("#saveBtn").on("click", function() {
-          console.log("Entro al click");
+          //console.log("Entro al click");
           $.ajax({
               url: "includes/dataSettings.inc.php",
               type: "POST",
