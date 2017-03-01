@@ -174,14 +174,14 @@
               return false;
           }
       }).on('input', function() {
-        var c = this.selectionStart,
-            r = /[^ a-z_0-9-]/gi,
-            v = $(this).val();
-        if(r.test(v)) {
-          $(this).val(v.replace(r, ''));
-          c--;
-        }
-        this.setSelectionRange(c, c);
+          var c = this.selectionStart,
+              r = /[^ a-z_0-9-]/gi,
+              v = $(this).val();
+          if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+          }
+          this.setSelectionRange(c, c);
       });
 
       $("#locationCB" ).autocomplete({
@@ -192,14 +192,14 @@
               return false;
           }
       }).on('input', function() {
-        var c = this.selectionStart,
-            r = /[^ a-z_0-9-]/gi,
-            v = $(this).val();
-        if(r.test(v)) {
-          $(this).val(v.replace(r, ''));
-          c--;
-        }
-        this.setSelectionRange(c, c);
+          var c = this.selectionStart,
+              r = /[^ a-z_0-9-]/gi,
+              v = $(this).val();
+          if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+          }
+          this.setSelectionRange(c, c);
       });
       $("#titleCB" ).autocomplete({
           minLength: 1,
@@ -209,14 +209,14 @@
               return false;
           }
       }).on('input', function() {
-        var c = this.selectionStart,
-            r = /[^ a-z_0-9-]/gi,
-            v = $(this).val();
-        if(r.test(v)) {
-          $(this).val(v.replace(r, ''));
-          c--;
-        }
-        this.setSelectionRange(c, c);
+          var c = this.selectionStart,
+              r = /[^ a-z_0-9-]/gi,
+              v = $(this).val();
+          if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+          }
+          this.setSelectionRange(c, c);
       });
       $("#subtitleCB" ).autocomplete({
           minLength: 1,
@@ -226,14 +226,14 @@
               return false;
           }
       }).on('input', function() {
-        var c = this.selectionStart,
-            r = /[^ a-z_0-9-]/gi,
-            v = $(this).val();
-        if(r.test(v)) {
-          $(this).val(v.replace(r, ''));
-          c--;
-        }
-        this.setSelectionRange(c, c);
+          var c = this.selectionStart,
+              r = /[^ a-z_0-9-]/gi,
+              v = $(this).val();
+          if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+          }
+          this.setSelectionRange(c, c);
       });
       $("#personCB" ).autocomplete({
           minLength: 1,
@@ -243,14 +243,18 @@
               return false;
           }
       }).on('input', function() {
-        var c = this.selectionStart,
-            r = /[^ a-z_0-9-]/gi,
-            v = $(this).val();
-        if(r.test(v)) {
-          $(this).val(v.replace(r, ''));
-          c--;
-        }
-        this.setSelectionRange(c, c);
+          var c = this.selectionStart,
+              r = /[^ a-z_0-9-]/gi,
+              v = $(this).val();
+          if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+          }
+          this.setSelectionRange(c, c);
+      });
+
+      $("#formatCB").autocomplete({
+          source:'includes/jsonObjetDataList.php?table=format&field=format'
       });
       
       $("#saveBtn").on("click", function() {
@@ -337,7 +341,7 @@
           console.error('Error Trigger:', e.trigger);
       });
       
-      var msgLargeFileError = "Make a shorter slug name, it excedes maximun characters recommended in AVID.";
+      var msgLargeFileError = "Please make a shorter Slug, Long slugs can cause some AVID functions to fail.";
       var msgValidationFields = "Slug name should not be empty.";
       $("#recordingsForm").bootstrapValidator({
           framework: 'bootstrap',
