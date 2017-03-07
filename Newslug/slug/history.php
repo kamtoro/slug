@@ -177,7 +177,7 @@ include_once 'includes/datalist.inc.php';
               <thead>
                 <tr>
                   <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="false">id</th>
-                  <th data-column-id="urn" data-sortable="false" data-align="left" data-width="70">URN</th>
+                  <th data-column-id="urn" data-sortable="true" data-align="left" data-width="70">URN</th>
                   <th data-column-id="source">Source</th>
                   <th data-column-id="location" data-width="110px">Location</th>
                   <th data-column-id="title" data-sortable="false">Title</th>
