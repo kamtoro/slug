@@ -116,9 +116,12 @@ include_once 'includes/datalist.inc.php';
                 <input class="form-control input-capitalize" type="text" id="personCB" name="personCB" placeholder="For...">
               </div>
             </div>
+
             <div class="form-group col-sm-2">
-                <label for="formatCB" class="sr-only control-label">Format</label>
-                <input class="form-control input-capitalize" type="text" id="formatCB" name="formatCB" placeholder="Format..." value = "HD">
+                <select class="form-control" id="formatCB" name="formatCB" >
+                  <option>HD</option>
+                  <option>SD</option>
+                </select>
             </div>
             <div class="col-sm-12">
                 <span class="help-block text-left fileNameMessage" ></span>
@@ -170,7 +173,7 @@ include_once 'includes/datalist.inc.php';
                 <tr>
                   <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="false">id</th>
                   <th data-column-id="urn" data-order="desc" data-sortable="true" data-align="left" data-width="65">URN</th>
-                  <th data-column-id="source">Source</th>
+                  <th data-column-id="source" data-width="100">Source</th>
                   <th data-column-id="location" data-width="110px">Location</th>
                   <th data-column-id="title" data-sortable="false">Title</th>
                   <th data-column-id="subtitle" data-sortable="false">Subtitle</th>

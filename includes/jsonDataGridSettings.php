@@ -41,8 +41,8 @@ if (isset($_GET["settings"])){
 $order_by=$field;
 $rows=50;
 $current=1;
-$limit_l=($current * $rows) - ($rows);
-$limit_h=$limit_lower + $rows;
+$limit_l = ($current * $rows) - ($rows);
+$limit_h = $limit_l + $rows;
 
 //Handles Sort querystring sent from Bootgrid
 if (isset($_REQUEST['sort']) && is_array($_REQUEST['sort']) ){

@@ -19,7 +19,7 @@ if (!empty($_POST)) {
     }
     if($action =="deleteSetting"){
         // echo json_encode(getRecordingByID(20017));
-        
+
         $returnStatus = "";
         if(isset($_POST['tableToDelete'])){
             $returnStatus = deleteSetting($_POST['tableToDelete'], $_POST['idSetting']);
@@ -36,7 +36,7 @@ if (!empty($_POST)) {
 }
 
 function insertSettings($format, $source, $location, $title, $person){
-    
+
     if ($format != "") {
         $format = $format;
         if (checkList("format", "format", $format)) {
@@ -100,7 +100,7 @@ function checkList($table, $value, $listValue) {
             return true;
         }
     }catch (PDOException $e) {
-          return false;
+        return false;
     }
 }
 
@@ -154,17 +154,17 @@ function insertSQLSetting($sql){
 
 function deleteRecordingFromDB($id) {
     try {
-    $sql = "DELETE FROM recordings WHERE id = :id";
+        $sql = "DELETE FROM recordings WHERE id = :id";
 
-    $database = new Config();
-    $db = $database->getConnection();
-    $stmt = $db->prepare($sql);
+        $database = new Config();
+        $db = $database->getConnection();
+        $stmt = $db->prepare($sql);
 
-    $stmt -> bindParam(':id', $id);
-    $stmt -> execute();
+        $stmt -> bindParam(':id', $id);
+        $stmt -> execute();
 
-    $db = $database->closeConnection();
-    return "Recording deleted FROM DB => ".$id;
+        $db = $database->closeConnection();
+        return "Recording deleted FROM DB => ".$id;
     } catch (PDOException $e) {
         // echo 'Connection failed: ' . $e->getMessage();
         return 'Connection failed: '. $e->getMessage();
@@ -172,27 +172,27 @@ function deleteRecordingFromDB($id) {
 }
 
 function deleteRecording($id) {
-  $tdate = date("Y-m-d H:i:s", time());
-  try {
-    // $sql = "SELECT format, source, location, title, subtitle, person, urn FROM recordings WHERE id = :id";
+    $tdate = date("Y-m-d H:i:s", time());
+    try {
+        // $sql = "SELECT format, source, location, title, subtitle, person, urn FROM recordings WHERE id = :id";
 
-    $sql = "UPDATE recordings SET status = \"deleted\", time = :tdate WHERE id = :id";
-    // $sql = "UPDATE recordings SET status = \"deleted\" WHERE id = :id";
+        $sql = "UPDATE recordings SET status = \"deleted\", time = :tdate WHERE id = :id";
+        // $sql = "UPDATE recordings SET status = \"deleted\" WHERE id = :id";
 
-    $database = new Config();
-    $db = $database->getConnection();
-    $stmt = $db->prepare($sql);
+        $database = new Config();
+        $db = $database->getConnection();
+        $stmt = $db->prepare($sql);
 
-    $stmt -> bindParam(':id',       $id);
-    $stmt -> bindParam(':tdate',    $tdate);
-    $stmt -> execute();
+        $stmt -> bindParam(':id',       $id);
+        $stmt -> bindParam(':tdate',    $tdate);
+        $stmt -> execute();
 
-    $db = $database->closeConnection();
-    return "Recording deleted => ".$id;
-  } catch (PDOException $e) {
-      // echo 'Connection failed: ' . $e->getMessage();
-      return 'Connection failed: '. $e->getMessage();
-  }
+        $db = $database->closeConnection();
+        return "Recording deleted => ".$id;
+    } catch (PDOException $e) {
+        // echo 'Connection failed: ' . $e->getMessage();
+        return 'Connection failed: '. $e->getMessage();
+    }
 }
 
 
