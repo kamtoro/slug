@@ -55,7 +55,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-
+        var slugNameLength = 80; //Var to be modified in case the Slug Name changes
         var webpage = "<?php echo _WEBPAGE_ ?>";
         if (webpage == "history"){
             commandsDatagrid = "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\"row\"><div class=\"col-sm-12 actionBar\"> <p class=\"{{css.search}}\"></p></div></div></div>";
@@ -337,7 +337,7 @@
             console.error('Error Trigger:', e.trigger);
         });
 
-        var msgLargeFileError = "ERROR: Make a shorter Slug name (80 Characters max), it excedes maximun number of characters recommended in AVID.";
+        var msgLargeFileError = "ERROR: Make a shorter Slug name (" + slugNameLength + " Characters max), it excedes maximun number of characters recommended in AVID.";
         var msgValidationFields = "Slug name should not be empty.";
         $("#recordingsForm").bootstrapValidator({
             framework: 'bootstrap',
@@ -443,7 +443,7 @@
 
         function checkTotalFileLength() {
             var fileName = updateTextForClipboard($("#formatCB").val(), $("#sourceCB").val(), $("#locationCB").val(), $("#titleCB").val(), $("#subtitleCB").val(), $("#personCB").val(), "XXXXXX");
-            if (fileName.length < 81){
+            if (fileName.length <= slugNameLength){
                 $("#recordingsForm").data('bootstrapValidator').resetForm();
                 return true;  
             }else{

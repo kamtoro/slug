@@ -18,7 +18,7 @@ include_once 'includes/datalist.inc.php';
 HEADER
 ======================================================================
 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -172,7 +172,7 @@ DATAGRID RECORDING PANEL
                         <thead>
                             <tr>
                                 <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="false">id</th>
-                                <th data-column-id="urn" data-order="desc" data-sortable="true" data-align="left" data-width="65">URN</th>
+                                <th data-column-id="urn" data-sortable="true" data-align="left" data-width="65">URN</th>
                                 <th data-column-id="source">Source</th>
                                 <th data-column-id="location">Location</th>
                                 <th data-column-id="title" data-sortable="false">Title</th>
