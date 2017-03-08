@@ -10,6 +10,3 @@ INSERT INTO `slug`.`format` (`id`, `Format`) VALUES ('1', 'SD');
 INSERT INTO `slug`.`format` (`id`, `Format`) VALUES ('2', 'HD');
 INSERT INTO `slug`.`sourceList` (`id`, `source`) VALUES ('144', 'Pitch');
 
-
-UPDATE recordings R set R.time = '2009-12-31 23:59:59' 
-WHERE R.time = '9999-12-31 23:59:59'
